@@ -19,8 +19,11 @@ export default function Button({
   return (
     <Pressable
       {...rest}
-      onPressIn={() => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.semibold);
+      onPress={(e) => {
+        if (rest.onPress) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          rest.onPress(e);
+        }
       }}
       style={({ pressed }) => ({
         ...tailwind(

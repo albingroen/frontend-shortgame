@@ -6,6 +6,7 @@ import LoginPhoneView from "./views/login-phone";
 import LoginPhoneConfirmView from "./views/login-phone-confirm";
 import StartView from "./views/start";
 import { QueryClient, QueryClientProvider } from "react-query";
+import RoundView from "./views/round";
 
 const queryClient = new QueryClient();
 const Stack = createStackNavigator();
@@ -35,6 +36,7 @@ export default function App() {
             component={StartView}
             name="Start"
           />
+          <Stack.Screen component={RoundView} name="Round" />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>

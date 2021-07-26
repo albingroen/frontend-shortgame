@@ -6,7 +6,7 @@ export default function Card({ children }) {
   return (
     <View
       style={{
-        ...tailwind("w-40 bg-white rounded-lg mx-2 p-4"),
+        ...tailwind("w-48 bg-white rounded-lg mx-2 p-4"),
         shadowColor: "#000",
         shadowOffset: {
           width: 0,

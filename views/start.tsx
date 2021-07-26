@@ -1,4 +1,5 @@
 import Button from "../components/button";
+import Card from "../components/card";
 import React from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
@@ -13,7 +14,7 @@ import { StatusBar } from "expo-status-bar";
 import { getUser, logout } from "../lib/user";
 import { range } from "lodash";
 import { useQuery } from "react-query";
-import Card from "../components/card";
+import Avatar from "../components/avatar";
 
 export default function StartView({ navigation }) {
   const { data, isLoading, error, refetch } = useQuery("user", getUser);
@@ -21,13 +22,17 @@ export default function StartView({ navigation }) {
   return (
     <SafeAreaView style={tailwind("bg-gray-100")}>
       <StatusBar style="dark" />
-      <ScrollView
-        contentContainerStyle={tailwind("p-4 py-12 h-full")}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={tailwind("p-4 h-full")}>
         {data ? (
           <View>
-            <Text style={tailwind("text-4xl font-bold")}>Welcome, back</Text>
+            <View style={tailwind("flex-row justify-between items-center")}>
+              <Text style={tailwind("text-2xl")}>👋</Text>
+              <Avatar src={data.avatar} />
+            </View>
+
+            <Text style={tailwind("text-4xl mt-8 font-bold")}>
+              Welcome, back
+            </Text>
             <Text style={tailwind("text-lg text-gray-500 mt-4 font-medium")}>
               Here you can see your past rounds, your handicap, and register a
               new round.
@@ -37,9 +42,9 @@ export default function StartView({ navigation }) {
             </View>
 
             <ScrollView
-              contentContainerStyle={tailwind("flex-row px-2 py-6")}
+              contentContainerStyle={tailwind("flex-row px-2 py-8")}
               style={tailwind("-ml-4 -mr-4")}
-              snapToInterval={4 * 40 + 4 * 4}
+              snapToInterval={4 * 48 + 4 * 4}
               snapToAlignment="start"
               decelerationRate={0}
               horizontal
@@ -64,7 +69,14 @@ export default function StartView({ navigation }) {
                   </Text>
 
                   <View style={tailwind("mt-4 mb-2")}>
-                    <Button size="small">View</Button>
+                    <Button
+                      onPress={() => {
+                        navigation.navigate("Round", { id: String(n) });
+                      }}
+                      size="small"
+                    >
+                      View
+                    </Button>
                   </View>
                 </Card>
               ))}
