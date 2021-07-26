@@ -5,6 +5,7 @@ import { Pressable, PressableProps, Text, View } from "react-native";
 import { classNames } from "../lib/utils";
 
 interface IButtonProps extends PressableProps {
+  type?: "default" | "primary";
   size?: "default" | "small";
   icon?: ReactNode;
   block?: boolean;
@@ -12,12 +13,15 @@ interface IButtonProps extends PressableProps {
 
 export default function Button({
   size = "default",
+  type = "default",
   block = false,
   children,
   disabled,
   icon,
   ...rest
 }: IButtonProps) {
+  const color = type === "default" ? "gray" : "green";
+
   return (
     <Pressable
       {...rest}
@@ -36,11 +40,11 @@ export default function Button({
               : "rounded-lg py-4 px-7",
             size === "small"
               ? pressed
-                ? "bg-green-200"
-                : "bg-green-100"
+                ? `bg-${color}-200`
+                : `bg-${color}-100`
               : pressed
-              ? "bg-green-300"
-              : "bg-green-200",
+              ? `bg-${color}-300`
+              : `bg-${color}-200`,
             disabled && "opacity-50",
             block && "w-full"
           )
@@ -53,8 +57,8 @@ export default function Button({
           classNames(
             "font-semibold",
             size === "small"
-              ? "text-base text-green-500"
-              : "text-xl text-green-600"
+              ? `text-base text-${color}-500`
+              : `text-xl text-${color}-600`
           )
         )}
       >
@@ -68,8 +72,8 @@ export default function Button({
                 classNames(
                   "font-semibold",
                   size === "small"
-                    ? "text-base text-green-500"
-                    : "text-xl text-green-600"
+                    ? `text-base text-${color}-500`
+                    : `text-xl text-${color}-600`
                 )
               )}
             >
