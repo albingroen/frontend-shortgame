@@ -41,6 +41,7 @@ export default function PinInput({ onChange }: IPinInputProps) {
 
         return (
           <TextInput
+            autoFocus={!n}
             style={tailwind(
               classNames(
                 "text-center text-3xl py-4 flex-1",

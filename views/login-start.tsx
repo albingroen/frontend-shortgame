@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import tailwind from "tailwind-rn";
 import { StatusBar } from "expo-status-bar";
 import { View, SafeAreaView } from "react-native";
 import Button from "../components/Button";
+import { useQuery } from "react-query";
+import { getUser } from "../lib/user";
 
 export default function LoginStartView({ navigation }) {
+  const { data, isLoading, error } = useQuery("user", getUser);
+
+  useEffect(() => {
+    if (data && !isLoading && !error) {
+      navigation.navigate("Start");
+    }
+  }, [data, isLoading, error]);
+
   return (
     <SafeAreaView>
       <StatusBar style="dark" />

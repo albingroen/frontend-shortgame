@@ -3,12 +3,39 @@ import PinInput from "../components/pin-input";
 import React, { useState } from "react";
 import tailwind from "tailwind-rn";
 import { StatusBar } from "expo-status-bar";
-import { View, SafeAreaView, KeyboardAvoidingView, ScrollView, Alert, } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  ScrollView,
+  Alert,
+} from "react-native";
+import axios from "axios";
+import { apiUrl } from "../lib/config";
+import * as SecureStore from "expo-secure-store";
 
-export default function LoginPhoneConfirmView({ navigation }) {
+export default function LoginPhoneConfirmView({
+  navigation,
+  route: {
+    params: { phoneNumber },
+  },
+}) {
   const [code, setCode] = useState<string>("");
 
-  console.log(code)
+  const onConfirm = async () => {
+    axios
+      .post(`${apiUrl}/auth/confirm`, {
+        phoneNumber,
+        code,
+      })
+      .then((res) => {
+        SecureStore.setItemAsync("x-token", res.data);
+        navigation.navigate("Start");
+      })
+      .catch((err) => {
+        Alert.alert(err.response?.data?.message || err.message);
+      });
+  };
 
   return (
     <KeyboardAvoidingView behavior="padding">
@@ -23,7 +50,9 @@ export default function LoginPhoneConfirmView({ navigation }) {
 
           <View style={tailwind("mt-8")}>
             <Button
-              onPress={() => Alert.alert(code)}
+              onPress={() => {
+                onConfirm();
+              }}
               disabled={code.length !== 4}
               icon="&rarr;"
             >

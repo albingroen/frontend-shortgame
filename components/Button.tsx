@@ -23,22 +23,18 @@ export default function Button({
       style={({ pressed }) => ({
         ...tailwind(
           classNames(
-            "py-4 px-7 w-full rounded-full items-center justify-between flex-row",
-            pressed ? "bg-blue-200" : "bg-blue-100",
+            "py-4 px-7 w-full rounded-lg items-center justify-between flex-row",
+            pressed ? "bg-pink-700" : "bg-pink-600",
             disabled && "opacity-50"
           )
         ),
       })}
     >
       <View />
-      <Text style={tailwind("text-blue-600 font-semibold text-xl")}>
-        {children}
-      </Text>
+      <Text style={tailwind("text-white font-medium text-xl")}>{children}</Text>
       {icon ? (
         typeof icon === "string" ? (
-          <Text style={tailwind("text-blue-600 font-semibold text-xl")}>
-            {icon}
-          </Text>
+          <Text style={tailwind("text-white font-medium text-xl")}>{icon}</Text>
         ) : (
           icon
         )

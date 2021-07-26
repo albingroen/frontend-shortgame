@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import Button from "../components/Button";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import tailwind from "tailwind-rn";
 import { StatusBar } from "expo-status-bar";
+import * as SecureStore from "expo-secure-store";
 import {
   View,
   SafeAreaView,
@@ -8,11 +11,37 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  Alert,
 } from "react-native";
-import Button from "../components/Button";
+import { apiUrl } from "../lib/config";
 
 export default function LoginPhoneView({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState<string>();
+
+  const onLogin = async () => {
+    if (!phoneNumber) return;
+
+    await SecureStore.setItemAsync("phoneNumber", phoneNumber);
+
+    axios
+      .post(`${apiUrl}/auth/login`, {
+        phoneNumber,
+      })
+      .then(() => {
+        navigation.navigate("LoginPhoneConfirm", { phoneNumber });
+      })
+      .catch((err) => {
+        Alert.alert(err.message);
+      });
+  };
+
+  useEffect(() => {
+    SecureStore.getItemAsync("phoneNumber").then((value) => {
+      if (value) {
+        setPhoneNumber(value);
+      }
+    });
+  }, []);
 
   return (
     <KeyboardAvoidingView behavior="padding">
@@ -37,8 +66,8 @@ export default function LoginPhoneView({ navigation }) {
           </View>
           <View style={tailwind("mt-4")}>
             <Button
-              onPress={() => {
-                navigation.navigate("LoginPhoneConfirm", { phoneNumber });
+              onPress={async () => {
+                onLogin();
               }}
               disabled={!phoneNumber}
               icon="&rarr;"

@@ -4,29 +4,39 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginStartView from "./views/login-start";
 import LoginPhoneView from "./views/login-phone";
 import LoginPhoneConfirmView from "./views/login-phone-confirm";
+import StartView from "./views/start";
+import { QueryClient, QueryClientProvider } from "react-query";
 
+const queryClient = new QueryClient();
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          component={LoginStartView}
-          name="LoginStart"
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          component={LoginPhoneView}
-          name="LoginPhone"
-        />
-        <Stack.Screen
-          component={LoginPhoneConfirmView}
-          options={{ headerShown: false, gestureEnabled: false }}
-          name="LoginPhoneConfirm"
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            component={LoginStartView}
+            name="LoginStart"
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            component={LoginPhoneView}
+            name="LoginPhone"
+          />
+          <Stack.Screen
+            component={LoginPhoneConfirmView}
+            options={{ headerShown: false }}
+            name="LoginPhoneConfirm"
+          />
+          <Stack.Screen
+            options={{ gestureEnabled: false, headerShown: false }}
+            component={StartView}
+            name="Start"
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
