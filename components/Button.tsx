@@ -7,10 +7,12 @@ import { classNames } from "../lib/utils";
 interface IButtonProps extends PressableProps {
   size?: "default" | "small";
   icon?: ReactNode;
+  block?: boolean;
 }
 
 export default function Button({
   size = "default",
+  block = false,
   children,
   disabled,
   icon,
@@ -28,7 +30,7 @@ export default function Button({
       style={({ pressed }) => ({
         ...tailwind(
           classNames(
-            "w-full items-center justify-between flex-row",
+            "items-center justify-between flex-row",
             size === "small"
               ? "rounded-full py-2 px-4"
               : "rounded-lg py-4 px-7",
@@ -39,7 +41,8 @@ export default function Button({
               : pressed
               ? "bg-green-300"
               : "bg-green-200",
-            disabled && "opacity-50"
+            disabled && "opacity-50",
+            block && "w-full"
           )
         ),
       })}
@@ -58,22 +61,24 @@ export default function Button({
         {children}
       </Text>
       {icon ? (
-        typeof icon === "string" ? (
-          <Text
-            style={tailwind(
-              classNames(
-                "font-semibold",
-                size === "small"
-                  ? "text-base text-green-500"
-                  : "text-xl text-green-600"
-              )
-            )}
-          >
-            {icon}
-          </Text>
-        ) : (
-          icon
-        )
+        <View style={tailwind("ml-2")}>
+          {typeof icon === "string" ? (
+            <Text
+              style={tailwind(
+                classNames(
+                  "font-semibold",
+                  size === "small"
+                    ? "text-base text-green-500"
+                    : "text-xl text-green-600"
+                )
+              )}
+            >
+              {icon}
+            </Text>
+          ) : (
+            icon
+          )}
+        </View>
       ) : (
         <View />
       )}
