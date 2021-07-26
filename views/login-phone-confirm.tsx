@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from "../components/button";
 import PinInput from "../components/pin-input";
 import React, { useState } from "react";
 import tailwind from "tailwind-rn";

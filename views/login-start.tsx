@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import tailwind from "tailwind-rn";
 import { StatusBar } from "expo-status-bar";
 import { View, SafeAreaView } from "react-native";
-import Button from "../components/Button";
+import Button from "../components/button";
 import { useQuery } from "react-query";
 import { getUser } from "../lib/user";
 

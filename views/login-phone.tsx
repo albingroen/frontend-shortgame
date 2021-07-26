@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from "../components/button";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import tailwind from "tailwind-rn";

@@ -49,7 +49,13 @@ export default function PinInput({ onChange }: IPinInputProps) {
               )
             )}
             onChange={(e) => {
-              if (e.nativeEvent.text) {
+              console.log(e.nativeEvent.text);
+              if (e.nativeEvent.text?.length > 1) {
+                e.preventDefault();
+                const parts = e.nativeEvent.text.split("");
+                const setFn = setValueFns[n];
+                setFn(parts[n]);
+              } else if (e.nativeEvent.text) {
                 const nextInput = iRefs[n + 1];
                 if (nextInput) {
                   nextInput.current.focus();
@@ -67,15 +73,8 @@ export default function PinInput({ onChange }: IPinInputProps) {
               }
             }}
             onChangeText={(value) => {
-              if (value?.length > 1) {
-                const parts = value.split("");
-                setValueFns.forEach((setFn, i) => {
-                  setFn(parts[i]);
-                });
-              } else {
-                const setFn = setValueFns[n];
-                setFn(value);
-              }
+              const setFn = setValueFns[n];
+              setFn(value);
             }}
             keyboardType="numeric"
             ref={iRefs[n]}
