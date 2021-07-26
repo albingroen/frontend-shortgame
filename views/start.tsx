@@ -140,7 +140,6 @@ export default function StartView({ navigation }) {
 
                   <Button
                     onPress={() => setIsCreateRoundOpen(false)}
-                    icon="&times;"
                     size="small"
                   >
                     Close
