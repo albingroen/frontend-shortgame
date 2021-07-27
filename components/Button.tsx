@@ -1,12 +1,19 @@
 import * as Haptics from "expo-haptics";
 import React, { ReactNode } from "react";
 import tailwind from "tailwind-rn";
-import { Pressable, PressableProps, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  PressableProps,
+  Text,
+  View,
+} from "react-native";
 import { classNames } from "../lib/utils";
 
 interface IButtonProps extends PressableProps {
   type?: "default" | "primary";
   size?: "default" | "small";
+  loading?: boolean;
   icon?: ReactNode;
   block?: boolean;
 }
@@ -14,6 +21,7 @@ interface IButtonProps extends PressableProps {
 export default function Button({
   size = "default",
   type = "default",
+  loading = false,
   block = false,
   children,
   disabled,
@@ -31,6 +39,7 @@ export default function Button({
           rest.onPress(e);
         }
       }}
+      disabled={disabled || loading}
       style={({ pressed }) => ({
         ...tailwind(
           classNames(
@@ -51,40 +60,50 @@ export default function Button({
         ),
       })}
     >
-      <View />
-      <Text
-        style={tailwind(
-          classNames(
-            "font-semibold",
-            size === "small"
-              ? `text-base text-${color}-500`
-              : `text-xl text-${color}-600`
-          )
-        )}
-      >
-        {children}
-      </Text>
-      {icon ? (
-        <View style={tailwind("ml-2")}>
-          {typeof icon === "string" ? (
-            <Text
-              style={tailwind(
-                classNames(
-                  "font-semibold",
-                  size === "small"
-                    ? `text-base text-${color}-500`
-                    : `text-xl text-${color}-600`
-                )
-              )}
-            >
-              {icon}
-            </Text>
-          ) : (
-            icon
-          )}
-        </View>
+      {loading ? (
+        <>
+          <View />
+          <ActivityIndicator style={tailwind("my-1")} />
+          <View />
+        </>
       ) : (
-        <View />
+        <>
+          <View />
+          <Text
+            style={tailwind(
+              classNames(
+                "font-semibold",
+                size === "small"
+                  ? `text-base text-${color}-500`
+                  : `text-xl text-${color}-600`
+              )
+            )}
+          >
+            {children}
+          </Text>
+          {icon ? (
+            <View style={tailwind("ml-2")}>
+              {typeof icon === "string" ? (
+                <Text
+                  style={tailwind(
+                    classNames(
+                      "font-semibold",
+                      size === "small"
+                        ? `text-base text-${color}-500`
+                        : `text-xl text-${color}-600`
+                    )
+                  )}
+                >
+                  {icon}
+                </Text>
+              ) : (
+                icon
+              )}
+            </View>
+          ) : (
+            <View />
+          )}
+        </>
       )}
     </Pressable>
   );

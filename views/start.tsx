@@ -16,6 +16,7 @@ import { logout, useUser } from "../lib/user";
 import Avatar from "../components/avatar";
 import { useQuery } from "react-query";
 import { getRounds } from "../lib/round";
+import CreateRound from "../components/create-round";
 
 export default function StartView({ navigation }) {
   // Server state
@@ -73,15 +74,15 @@ export default function StartView({ navigation }) {
                   decelerationRate={0}
                   horizontal
                 >
-                  {rounds.map((n) => (
-                    <Card key={n}>
+                  {rounds.map((round) => (
+                    <Card key={round.id}>
                       <View style={tailwind("flex-row items-center mt-1")}>
                         <Text
                           style={tailwind(
                             "text-gray-500 font-semibold text-2xl"
                           )}
                         >
-                          10
+                          {round.total}
                         </Text>
                         <Text
                           style={tailwind("text-gray-500 font-bold text-2xl")}
@@ -101,7 +102,7 @@ export default function StartView({ navigation }) {
                       <View style={tailwind("mt-4 mb-2")}>
                         <Button
                           onPress={() => {
-                            navigation.navigate("Round", { id: String(n) });
+                            navigation.navigate("Round", { id: String(round) });
                           }}
                           type="primary"
                           size="small"
@@ -128,24 +129,14 @@ export default function StartView({ navigation }) {
             </View>
 
             <Modal
-              onRequestClose={() => setIsCreateRoundOpen(false)}
-              onDismiss={() => setIsCreateRoundOpen(false)}
               presentationStyle="pageSheet"
               visible={isCreateRoundOpen}
               animationType="slide"
             >
-              <View style={tailwind("p-6")}>
-                <View style={tailwind("flex-row justify-between items-center")}>
-                  <Text style={tailwind("text-2xl font-bold")}>New round</Text>
-
-                  <Button
-                    onPress={() => setIsCreateRoundOpen(false)}
-                    size="small"
-                  >
-                    Close
-                  </Button>
-                </View>
-              </View>
+              <CreateRound
+                onClose={() => setIsCreateRoundOpen(false)}
+                navigation={navigation}
+              />
             </Modal>
           </>
         ) : isUserLoading ? (
