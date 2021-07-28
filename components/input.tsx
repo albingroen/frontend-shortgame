@@ -17,7 +17,7 @@ export default function Input({ label, ...rest }: IInputProps) {
 
       <TextInput
         style={tailwind(
-          "border border-gray-200 rounded-lg p-4 text-xl mt-2 pt-3"
+          "border border-gray-200 rounded-lg p-4 text-xl mt-2 pt-3 bg-white"
         )}
         {...rest}
       />

@@ -7,6 +7,8 @@ import StartView from "./views/start";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createStackNavigator } from "@react-navigation/stack";
+import ProfileView from "./views/profile";
+import EditProfileView from "./views/edit-profile";
 
 const queryClient = new QueryClient();
 const Stack = createStackNavigator();
@@ -37,6 +39,12 @@ export default function App() {
             name="Start"
           />
           <Stack.Screen component={RoundView} name="Round" />
+          <Stack.Screen component={ProfileView} name="Profile" />
+          <Stack.Screen
+            options={{ headerTitle: "Edit profile" }}
+            component={EditProfileView}
+            name="EditProfile"
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>

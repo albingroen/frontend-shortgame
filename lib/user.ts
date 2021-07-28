@@ -13,6 +13,16 @@ export const getUser = async () => {
     .catch(() => {});
 };
 
+export const updateUser = async (values: any) => {
+  const token = await SecureStore.getItemAsync("x-token");
+  return axios
+    .put(`${apiUrl}/user`, values, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => res.data)
+    .catch(() => {});
+};
+
 export const logout = async (navigation) => {
   SecureStore.deleteItemAsync("x-token").then(() => {
     navigation.navigate("LoginStart");

@@ -3,6 +3,7 @@ import Card from "../components/card";
 import React, { useCallback, useState } from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
+import * as Haptics from "expo-haptics";
 import {
   ActivityIndicator,
   Modal,
@@ -10,6 +11,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -19,6 +21,7 @@ import { useQuery } from "react-query";
 import { getRounds } from "../lib/round";
 import CreateRound from "../components/create-round";
 import { useFocusEffect } from "@react-navigation/native";
+import Empty from "../components/empty";
 
 const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -74,7 +77,14 @@ export default function StartView({ navigation }) {
             <View>
               <View style={tailwind("flex-row justify-between items-center")}>
                 <Text style={tailwind("text-2xl")}>👋</Text>
-                <Avatar src={user.avatar} />
+                <TouchableOpacity
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    navigation.navigate("Profile");
+                  }}
+                >
+                  <Avatar src={user.avatar} />
+                </TouchableOpacity>
               </View>
 
               <Text style={tailwind("text-4xl mt-6 font-bold")}>
@@ -104,53 +114,55 @@ export default function StartView({ navigation }) {
                   horizontal
                 >
                   {rounds.map((round) => (
-                    <Card key={round.id}>
-                      <View style={tailwind("flex-row items-center mt-1")}>
+                    <View style={tailwind("w-48 mx-2")} key={round.id}>
+                      <Card>
+                        <View style={tailwind("flex-row items-center mt-1")}>
+                          <Text
+                            style={tailwind(
+                              "text-gray-500 font-semibold text-2xl"
+                            )}
+                          >
+                            {round.total}
+                          </Text>
+                          <Text
+                            style={tailwind("text-gray-500 font-bold text-2xl")}
+                          >
+                            /64
+                          </Text>
+                        </View>
+
                         <Text
                           style={tailwind(
-                            "text-gray-500 font-semibold text-2xl"
+                            "text-lg text-gray-400 mt-2 font-semibold"
                           )}
                         >
-                          {round.total}
+                          {moment(round.createdAt).format("MMM DD, HH:mm")}
                         </Text>
-                        <Text
-                          style={tailwind("text-gray-500 font-bold text-2xl")}
-                        >
-                          /64
-                        </Text>
-                      </View>
 
-                      <Text
-                        style={tailwind(
-                          "text-lg text-gray-400 mt-2 font-semibold"
-                        )}
-                      >
-                        {moment(round.createdAt).format("MMM DD, HH:mm")}
-                      </Text>
-
-                      <View style={tailwind("mt-4 mb-2")}>
-                        <Button
-                          onPress={() => {
-                            navigation.navigate("Round", { id: round.id });
-                          }}
-                          size="small"
-                        >
-                          View
-                        </Button>
-                      </View>
-                    </Card>
+                        <View style={tailwind("mt-4 mb-2")}>
+                          <Button
+                            onPress={() => {
+                              navigation.navigate("Round", { id: round.id });
+                            }}
+                            size="small"
+                          >
+                            View
+                          </Button>
+                        </View>
+                      </Card>
+                    </View>
                   ))}
                 </ScrollView>
               ) : (
                 <View style={tailwind("my-8")}>
                   {isRoundsLoading ? (
                     <ActivityIndicator />
+                  ) : roundsError ? (
+                    <Text>
+                      Failed to retrieve rounds ({roundsError.message})
+                    </Text>
                   ) : (
-                    roundsError && (
-                      <Text>
-                        Failed to retrieve rounds ({roundsError.message})
-                      </Text>
-                    )
+                    <Empty>You have no registered rounds</Empty>
                   )}
                 </View>
               )}
