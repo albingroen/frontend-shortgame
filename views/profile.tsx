@@ -1,5 +1,5 @@
 import Avatar from "../components/avatar";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import tailwind from "tailwind-rn";
 import {
   Button as RNButton,
@@ -10,9 +10,8 @@ import {
   View,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { getUser, logout } from "../lib/user";
+import { logout, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
-import { useQuery } from "react-query";
 import Button from "../components/button";
 import Card from "../components/card";
 
@@ -21,25 +20,12 @@ export default function ProfileView({ navigation }) {
     isLoading: isUserLoading,
     refetch: refetchUser,
     error: userError,
-    data: user,
-  } = useQuery("user", getUser);
+    user,
+  } = useUser();
 
   const onRefresh = () => {
     refetchUser();
   };
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <RNButton
-          title="Edit"
-          onPress={() => {
-            navigation.navigate("EditProfile");
-          }}
-        />
-      ),
-    });
-  }, []);
 
   useFocusEffect(useCallback(onRefresh, []));
 
@@ -51,9 +37,18 @@ export default function ProfileView({ navigation }) {
           <View>
             <View style={tailwind("items-center py-5")}>
               <Avatar size="large" src={user.avatar} />
-              <Text style={tailwind("text-center text-xl font-semibold mt-4")}>
+              <Text style={tailwind("text-center text-xl font-semibold my-4")}>
                 {user.name}
               </Text>
+              <Button
+                onPress={() => {
+                  navigation.navigate("EditProfile");
+                }}
+                type="primary"
+                size="small"
+              >
+                Edit
+              </Button>
             </View>
 
             <Card>

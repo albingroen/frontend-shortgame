@@ -16,9 +16,12 @@ export default function Input({ label, ...rest }: IInputProps) {
       )}
 
       <TextInput
-        style={tailwind(
-          "border border-gray-200 rounded-lg p-4 text-xl mt-2 pt-3 bg-white"
-        )}
+        style={{
+          paddingTop: 0,
+          paddingBottom: 0,
+          ...tailwind("border border-gray-200 rounded-lg p-4 bg-white mt-1.5"),
+          fontSize: 20,
+        }}
         {...rest}
       />
     </View>

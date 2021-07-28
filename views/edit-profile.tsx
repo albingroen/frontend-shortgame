@@ -4,8 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ActivityIndicator, View, Text, Alert } from "react-native";
-import { useQuery } from "react-query";
-import { getUser, updateUser } from "../lib/user";
+import { updateUser, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function EditProfileView() {
@@ -14,8 +13,8 @@ export default function EditProfileView() {
     isLoading: isUserLoading,
     refetch: refetchUser,
     error: userError,
-    data: user,
-  } = useQuery("user", getUser);
+    user,
+  } = useUser();
 
   const onRefresh = () => {
     refetchUser();
@@ -37,7 +36,7 @@ export default function EditProfileView() {
     }
   }, [user]);
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     setLoading(true);
 
     updateUser({ phoneNumber, email, name })
