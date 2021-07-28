@@ -1,12 +1,12 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import LoginStartView from "./views/login-start";
-import LoginPhoneView from "./views/login-phone";
 import LoginPhoneConfirmView from "./views/login-phone-confirm";
-import StartView from "./views/start";
-import { QueryClient, QueryClientProvider } from "react-query";
+import LoginPhoneView from "./views/login-phone";
+import LoginStartView from "./views/login-start";
+import React from "react";
 import RoundView from "./views/round";
+import StartView from "./views/start";
+import { NavigationContainer } from "@react-navigation/native";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const queryClient = new QueryClient();
 const Stack = createStackNavigator();

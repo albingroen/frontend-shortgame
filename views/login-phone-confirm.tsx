@@ -20,9 +20,12 @@ export default function LoginPhoneConfirmView({
     params: { phoneNumber },
   },
 }) {
+  const [loading, setLoading] = useState<boolean>(false);
   const [code, setCode] = useState<string>("");
 
   const onConfirm = async () => {
+    setLoading(true);
+
     axios
       .post(`${apiUrl}/auth/confirm`, {
         phoneNumber,
@@ -31,9 +34,11 @@ export default function LoginPhoneConfirmView({
       .then((res) => {
         SecureStore.setItemAsync("x-token", res.data);
         navigation.navigate("Start");
+        setLoading(false);
       })
       .catch((err) => {
         Alert.alert(err.response?.data?.message || err.message);
+        setLoading(false);
       });
   };
 
@@ -54,6 +59,7 @@ export default function LoginPhoneConfirmView({
                 onConfirm();
               }}
               disabled={code.length !== 4}
+              loading={loading}
               icon="&rarr;"
             >
               Continue

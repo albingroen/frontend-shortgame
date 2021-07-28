@@ -1,11 +1,12 @@
 import Button from "../components/button";
 import Card from "../components/card";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
 import {
   ActivityIndicator,
   Modal,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   Text,
@@ -17,6 +18,11 @@ import Avatar from "../components/avatar";
 import { useQuery } from "react-query";
 import { getRounds } from "../lib/round";
 import CreateRound from "../components/create-round";
+import { useFocusEffect } from "@react-navigation/native";
+
+const wait = (timeout: number) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export default function StartView({ navigation }) {
   // Server state
@@ -28,18 +34,41 @@ export default function StartView({ navigation }) {
   } = useUser();
 
   const {
-    data: rounds,
     isLoading: isRoundsLoading,
+    refetch: refetchRounds,
     error: roundsError,
+    data: rounds,
   } = useQuery("rounds", getRounds);
+
+  const onRefresh = () => {
+    refetchRounds();
+    refetchUser();
+  };
+
+  useFocusEffect(useCallback(onRefresh, []));
 
   // Client state
   const [isCreateRoundOpen, setIsCreateRoundOpen] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  const handleRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(async () => {
+      await refetchRounds();
+      await refetchUser();
+      setRefreshing(false);
+    });
+  }, []);
 
   return (
     <SafeAreaView style={tailwind("bg-gray-100")}>
       <StatusBar style="dark" />
-      <ScrollView contentContainerStyle={tailwind("p-4 h-full")}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
+        }
+        contentContainerStyle={tailwind("p-4 h-full")}
+      >
         {user ? (
           <>
             <View>
@@ -96,15 +125,14 @@ export default function StartView({ navigation }) {
                           "text-lg text-gray-400 mt-2 font-semibold"
                         )}
                       >
-                        {moment("2021-06-20 10:20").format("MMM DD, HH:mm")}
+                        {moment(round.createdAt).format("MMM DD, HH:mm")}
                       </Text>
 
                       <View style={tailwind("mt-4 mb-2")}>
                         <Button
                           onPress={() => {
-                            navigation.navigate("Round", { id: String(round) });
+                            navigation.navigate("Round", { id: round.id });
                           }}
-                          type="primary"
                           size="small"
                         >
                           View

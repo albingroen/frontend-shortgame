@@ -11,3 +11,13 @@ export const getRounds = async () => {
     .then((res) => res.data)
     .catch(() => {});
 };
+
+export const getRound = async (id: string) => {
+  const token = await SecureStore.getItemAsync("x-token");
+  return axios
+    .get(`${apiUrl}/round/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => res.data)
+    .catch(() => {});
+};

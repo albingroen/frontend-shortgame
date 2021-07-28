@@ -86,7 +86,7 @@ export default function CreateRound({
             onChangeText={setLongPuts}
             keyboardType="number-pad"
             label="Long puts"
-            placeholder="10"
+            placeholder="18"
             value={longPuts}
           />
         </View>
@@ -95,9 +95,9 @@ export default function CreateRound({
           <Input
             keyboardType="number-pad"
             onChangeText={setChip}
-            placeholder="10"
+            placeholder="16"
+            label="Chips"
             value={chip}
-            label="chip"
           />
         </View>
 
@@ -105,9 +105,9 @@ export default function CreateRound({
           <Input
             keyboardType="number-pad"
             onChangeText={setPitch}
-            placeholder="10"
+            placeholder="12"
+            label="Pitches"
             value={pitch}
-            label="pitch"
           />
         </View>
 
@@ -117,7 +117,7 @@ export default function CreateRound({
             keyboardType="number-pad"
             label="Bunker shots"
             value={bunker}
-            placeholder="10"
+            placeholder="5"
           />
         </View>
 

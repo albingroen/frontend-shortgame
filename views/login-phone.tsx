@@ -17,9 +17,12 @@ import { apiUrl } from "../lib/config";
 
 export default function LoginPhoneView({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onLogin = async () => {
     if (!phoneNumber) return;
+
+    setLoading(true);
 
     await SecureStore.setItemAsync("phoneNumber", phoneNumber);
 
@@ -29,9 +32,11 @@ export default function LoginPhoneView({ navigation }) {
       })
       .then(() => {
         navigation.navigate("LoginPhoneConfirm", { phoneNumber });
+        setLoading(false);
       })
       .catch((err) => {
         Alert.alert(err.message);
+        setLoading(false);
       });
   };
 
@@ -70,6 +75,7 @@ export default function LoginPhoneView({ navigation }) {
                 onLogin();
               }}
               disabled={!phoneNumber}
+              loading={loading}
               icon="&rarr;"
             >
               Continue
