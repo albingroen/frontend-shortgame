@@ -22,10 +22,7 @@ import { getRounds } from "../lib/round";
 import CreateRound from "../components/create-round";
 import { useFocusEffect } from "@react-navigation/native";
 import Empty from "../components/empty";
-
-const wait = (timeout: number) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
+import { wait } from "../lib/utils";
 
 export default function StartView({ navigation }) {
   // Server state

@@ -1,5 +1,5 @@
 import Avatar from "../components/avatar";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
 import {
   Button as RNButton,
@@ -8,14 +8,20 @@ import {
   ScrollView,
   Text,
   View,
+  RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { logout, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
 import Button from "../components/button";
 import Card from "../components/card";
+import { wait } from "../lib/utils";
 
 export default function ProfileView({ navigation }) {
+  // Client state
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  // Server state
   const {
     isLoading: isUserLoading,
     refetch: refetchUser,
@@ -42,10 +48,23 @@ export default function ProfileView({ navigation }) {
     });
   }, []);
 
+  const handleRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(async () => {
+      await refetchUser();
+      setRefreshing(false);
+    });
+  }, []);
+
   return (
     <SafeAreaView style={tailwind("bg-gray-100")}>
       <StatusBar style="dark" />
-      <ScrollView contentContainerStyle={tailwind("p-4 h-full")}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
+        }
+        contentContainerStyle={tailwind("p-4 h-full")}
+      >
         {user ? (
           <View>
             <View style={tailwind("items-center py-5")}>

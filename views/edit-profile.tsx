@@ -3,9 +3,16 @@ import Input from "../components/input";
 import React, { useCallback, useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ActivityIndicator, View, Text, Alert } from "react-native";
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  Alert,
+  RefreshControl,
+} from "react-native";
 import { updateUser, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
+import { wait } from "../lib/utils";
 
 export default function EditProfileView() {
   // Server state
@@ -21,8 +28,8 @@ export default function EditProfileView() {
   };
 
   useFocusEffect(useCallback(onRefresh, []));
-
   // Client state
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>();
@@ -50,8 +57,21 @@ export default function EditProfileView() {
       });
   };
 
+  const handleRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(async () => {
+      await refetchUser();
+      setRefreshing(false);
+    });
+  }, []);
+
   return (
-    <KeyboardAwareScrollView keyboardOpeningTime={0}>
+    <KeyboardAwareScrollView
+      refreshControl={
+        <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
+      }
+      keyboardOpeningTime={0}
+    >
       <View style={tailwind("p-6")}>
         {user ? (
           <View>
