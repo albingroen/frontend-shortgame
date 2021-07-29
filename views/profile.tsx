@@ -75,7 +75,7 @@ export default function ProfileView({ navigation }) {
             </View>
 
             <Card>
-              <Text style={tailwind("text-gray-500 text-lg")}>
+              <Text style={tailwind("text-gray-500 font-medium text-lg")}>
                 My handicap:
               </Text>
               <Text

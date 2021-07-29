@@ -1,1 +1,1 @@
-export const apiUrl = "http://192.168.2.154:5000";
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
