@@ -1,5 +1,5 @@
 import Avatar from "../components/avatar";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import tailwind from "tailwind-rn";
 import {
   Button as RNButton,
@@ -29,6 +29,19 @@ export default function ProfileView({ navigation }) {
 
   useFocusEffect(useCallback(onRefresh, []));
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <RNButton
+          onPress={() => {
+            navigation.push("EditProfile");
+          }}
+          title="Edit"
+        />
+      ),
+    });
+  }, []);
+
   return (
     <SafeAreaView style={tailwind("bg-gray-100")}>
       <StatusBar style="dark" />
@@ -37,18 +50,9 @@ export default function ProfileView({ navigation }) {
           <View>
             <View style={tailwind("items-center py-5")}>
               <Avatar size="large" src={user.avatar} />
-              <Text style={tailwind("text-center text-xl font-semibold my-4")}>
+              <Text style={tailwind("text-center text-xl font-semibold mt-4")}>
                 {user.name}
               </Text>
-              <Button
-                onPress={() => {
-                  navigation.navigate("EditProfile");
-                }}
-                type="primary"
-                size="small"
-              >
-                Edit
-              </Button>
             </View>
 
             <Card>

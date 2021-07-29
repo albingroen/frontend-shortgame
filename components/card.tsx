@@ -12,10 +12,10 @@ export default function Card({ children }) {
           width: 0,
           height: 5,
         },
-        shadowOpacity: 0.05,
-        shadowRadius: 5,
+        shadowOpacity: 0.025,
+        shadowRadius: 3,
 
-        elevation: 10,
+        elevation: 5,
       }}
     >
       {children}
