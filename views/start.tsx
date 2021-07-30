@@ -159,7 +159,7 @@ export default function StartView({ navigation }) {
                       Failed to retrieve rounds ({roundsError.message})
                     </Text>
                   ) : (
-                    <Empty>You have no registered rounds</Empty>
+                    <Empty>No registered rounds yet...</Empty>
                   )}
                 </View>
               )}
