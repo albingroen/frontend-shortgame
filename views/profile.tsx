@@ -85,7 +85,7 @@ export default function ProfileView({ navigation }) {
               </Text>
             </Card>
 
-            <View style={tailwind("mt-6")}>
+            <View style={tailwind("mt-10")}>
               <Button onPress={logout} icon="&rarr;">
                 Log Out
               </Button>
