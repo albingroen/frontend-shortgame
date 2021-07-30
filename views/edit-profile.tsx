@@ -113,7 +113,6 @@ export default function EditProfileView() {
                   email === user.email &&
                   name === user.name
                 }
-                type="primary"
               >
                 Save
               </Button>

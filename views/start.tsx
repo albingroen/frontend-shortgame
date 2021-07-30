@@ -95,7 +95,7 @@ export default function StartView({ navigation }) {
                 <Button
                   onPress={() => setIsCreateRoundOpen(true)}
                   type="primary"
-                  icon="+"
+                  icon="&rarr;"
                 >
                   New round
                 </Button>

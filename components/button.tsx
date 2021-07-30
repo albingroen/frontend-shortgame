@@ -43,10 +43,8 @@ export default function Button({
       style={({ pressed }) => ({
         ...tailwind(
           classNames(
-            "items-center justify-between flex-row",
-            size === "small"
-              ? "rounded-full py-2 px-4"
-              : "rounded-lg py-4 px-7",
+            "items-center justify-between flex-row rounded-full",
+            size === "small" ? "py-2 px-4" : "py-4 px-7",
             size === "small"
               ? pressed
                 ? `bg-${color}-200`
