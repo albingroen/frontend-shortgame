@@ -1,5 +1,6 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "name": "shortgame",
   "scripts": {
     "format": "prettier --write .",
     "start": "expo start",
