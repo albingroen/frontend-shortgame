@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "rn-test",
-    "slug": "rn-test",
+    "name": "Närspelsappen",
+    "slug": "shortgame",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,9 +13,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.shortgame.albingroen"
     },
     "android": {
       "adaptiveIcon": {
