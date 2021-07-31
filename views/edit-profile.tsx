@@ -106,7 +106,7 @@ export default function EditProfileView() {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={tailwind("bg-gray-100")}>
       <StatusBar style="dark" />
 
       <KeyboardAwareScrollView

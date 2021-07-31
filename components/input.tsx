@@ -15,7 +15,7 @@ export default function Input({ label, ...rest }: IInputProps) {
         style={{
           paddingTop: 0,
           paddingBottom: 0,
-          ...tailwind("border border-gray-200 rounded-lg p-4 bg-white"),
+          ...tailwind("rounded-lg p-4 bg-white"),
           fontSize: 20,
           shadowColor: "#000",
           shadowOffset: {

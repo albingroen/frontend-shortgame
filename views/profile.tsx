@@ -57,7 +57,7 @@ export default function ProfileView({ navigation }) {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={tailwind("bg-gray-100")}>
       <StatusBar style="dark" />
       <ScrollView
         refreshControl={

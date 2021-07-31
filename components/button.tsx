@@ -47,8 +47,8 @@ export default function Button({
             size === "small" ? "py-2 px-4" : "py-4 px-7",
             size === "small"
               ? pressed
-                ? `bg-${color}-200`
-                : `bg-${color}-100`
+                ? `bg-${color}-300`
+                : `bg-${color}-200`
               : pressed
               ? `bg-${color}-300`
               : `bg-${color}-200`,

@@ -61,7 +61,10 @@ export default function CreateRound({
   };
 
   return (
-    <KeyboardAwareScrollView keyboardOpeningTime={0}>
+    <KeyboardAwareScrollView
+      style={tailwind("bg-gray-100")}
+      keyboardOpeningTime={0}
+    >
       <View style={tailwind("p-6 pb-12")}>
         <View style={tailwind("flex-row justify-between items-center")}>
           <Text style={tailwind("text-2xl font-bold")}>New round</Text>
