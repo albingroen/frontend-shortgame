@@ -67,7 +67,7 @@ export default function StartView({ navigation }) {
         refreshControl={
           <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
         }
-        contentContainerStyle={tailwind("p-4 h-full")}
+        contentContainerStyle={tailwind("p-4 min-h-full")}
       >
         {user ? (
           <>
@@ -163,6 +163,42 @@ export default function StartView({ navigation }) {
                   )}
                 </View>
               )}
+
+              <View style={tailwind("h-px w-full bg-gray-200")} />
+
+              <View style={tailwind("mt-8")}>
+                <Card>
+                  <Text style={tailwind("text-xl font-semibold")}>
+                    Short puts
+                  </Text>
+
+                  <View style={tailwind("mt-1.5")}>
+                    <Text style={tailwind("text-base text-gray-500")}>
+                      Place 5 pegs with 1 meter in between each other. Putt 2
+                      balls from each peg. Once your done, move the pegs to the
+                      opposite side of the hole and do the same thing. 1 ball in
+                      the hole = 1 point.
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+
+              <View style={tailwind("mt-6")}>
+                <Card>
+                  <Text style={tailwind("text-xl font-semibold")}>
+                    Long puts
+                  </Text>
+
+                  <View style={tailwind("mt-1.5")}>
+                    <Text style={tailwind("text-base text-gray-500")}>
+                      Place 5 pegs with 5 meter in between each other. Putt 2
+                      balls from each peg. Once your done, move the pegs to the
+                      opposite side of the hole and do the same thing. 1 ball in
+                      the hole = 3 points, 0-1m = 2 points, 1-2m = 1 point.
+                    </Text>
+                  </View>
+                </Card>
+              </View>
             </View>
 
             <Modal
