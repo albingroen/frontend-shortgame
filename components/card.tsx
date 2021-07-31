@@ -14,7 +14,6 @@ export default function Card({ children }) {
         },
         shadowOpacity: 0.025,
         shadowRadius: 3,
-
         elevation: 5,
       }}
     >

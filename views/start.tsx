@@ -111,7 +111,7 @@ export default function StartView({ navigation }) {
                   horizontal
                 >
                   {rounds.map((round) => (
-                    <View style={tailwind("w-48 mx-2")} key={round.id}>
+                    <View style={tailwind("w-52 mx-2")} key={round.id}>
                       <Card>
                         <View style={tailwind("flex-row items-center mt-1")}>
                           <Text

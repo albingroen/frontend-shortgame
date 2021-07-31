@@ -17,6 +17,14 @@ export default function Input({ label, ...rest }: IInputProps) {
           paddingBottom: 0,
           ...tailwind("border border-gray-200 rounded-lg p-4 bg-white"),
           fontSize: 20,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 5,
+          },
+          shadowOpacity: 0.025,
+          shadowRadius: 3,
+          elevation: 5,
         }}
         {...rest}
       />
