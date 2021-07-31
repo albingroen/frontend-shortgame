@@ -1,19 +1,24 @@
 import Button from "../components/button";
-import Input from "../components/input";
+import Input, { InputLabel } from "../components/input";
 import React, { useCallback, useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as ImagePicker from "expo-image-picker";
 import {
   ActivityIndicator,
   View,
   Text,
   Alert,
   RefreshControl,
+  SafeAreaView,
 } from "react-native";
 import { updateUser, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
 import { wait } from "../lib/utils";
 import { StatusBar } from "expo-status-bar";
+import Avatar from "../components/avatar";
+import Card from "../components/card";
+import { fetchImageFromUri, uploadImage } from "../lib/image";
 
 export default function EditProfileView() {
   // Server state
@@ -33,29 +38,50 @@ export default function EditProfileView() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [avatar, setAvatar] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [name, setName] = useState<string>();
 
   useEffect(() => {
     if (user) {
       setPhoneNumber(user.phoneNumber);
+      setAvatar(user.avatar);
       setEmail(user.email);
       setName(user.name);
     }
   }, [user]);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setLoading(true);
 
-    updateUser({ phoneNumber, email, name })
-      .then(async () => {
-        await refetchUser();
-        setLoading(false);
-      })
-      .catch((err) => {
+    const run = (values: any) => {
+      updateUser(values)
+        .then(async () => {
+          await refetchUser();
+          setLoading(false);
+        })
+        .catch((err) => {
+          Alert.alert(err.response?.data?.message || err.message);
+          setLoading(false);
+        });
+    };
+
+    if (avatar?.startsWith("file")) {
+      // Upload image
+      const photo = {
+        uri: avatar,
+        type: "image/jpeg",
+        name: "shortgame-user-avatar.jpg",
+      };
+
+      const newAvatarUrl = await uploadImage(photo).catch((err) => {
         Alert.alert(err.response?.data?.message || err.message);
-        setLoading(false);
       });
+
+      run({ phoneNumber, email, name, avatar: newAvatarUrl });
+    } else {
+      run({ phoneNumber, email, name });
+    }
   };
 
   const handleRefresh = React.useCallback(() => {
@@ -66,68 +92,101 @@ export default function EditProfileView() {
     });
   }, []);
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setAvatar(result.uri);
+    }
+  };
+
   return (
-    <KeyboardAwareScrollView
-      refreshControl={
-        <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
-      }
-      keyboardOpeningTime={0}
-    >
+    <SafeAreaView>
       <StatusBar style="dark" />
-      <View style={tailwind("p-6")}>
-        {user ? (
-          <View>
-            <Input
-              clearButtonMode="while-editing"
-              onChangeText={setName}
-              placeholder="John Doe"
-              autoCapitalize="none"
-              value={name}
-              label="Name"
-            />
-            <View style={tailwind("mt-6")}>
-              <Input
-                placeholder="john.doe@mail.com"
-                clearButtonMode="while-editing"
-                keyboardType="email-address"
-                onChangeText={setEmail}
-                autoCapitalize="none"
-                value={email}
-                label="Email"
-              />
+
+      <KeyboardAwareScrollView
+        refreshControl={
+          <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
+        }
+        keyboardOpeningTime={0}
+      >
+        <View style={tailwind("p-6")}>
+          {user ? (
+            <View>
+              <InputLabel>Avatar</InputLabel>
+              <Card>
+                <View style={tailwind("flex-row items-center")}>
+                  <Avatar src={avatar} />
+
+                  <View style={tailwind("ml-4")}>
+                    <Button onPress={pickImage} size="small">
+                      Change image
+                    </Button>
+                  </View>
+                </View>
+              </Card>
+
+              <View style={tailwind("mt-6")}>
+                <Input
+                  clearButtonMode="while-editing"
+                  onChangeText={setName}
+                  placeholder="John Doe"
+                  autoCapitalize="none"
+                  value={name}
+                  label="Name"
+                />
+              </View>
+
+              <View style={tailwind("mt-6")}>
+                <Input
+                  placeholder="john.doe@mail.com"
+                  clearButtonMode="while-editing"
+                  keyboardType="email-address"
+                  onChangeText={setEmail}
+                  autoCapitalize="none"
+                  value={email}
+                  label="Email"
+                />
+              </View>
+              <View style={tailwind("mt-6")}>
+                <Input
+                  clearButtonMode="while-editing"
+                  onChangeText={setPhoneNumber}
+                  placeholder="+4172918894"
+                  keyboardType="phone-pad"
+                  value={phoneNumber}
+                  label="Phone"
+                />
+              </View>
+              <View style={tailwind("mt-10")}>
+                <Button
+                  onPress={onSubmit}
+                  loading={loading}
+                  disabled={
+                    phoneNumber === user.phoneNumber &&
+                    email === user.email &&
+                    name === user.name &&
+                    avatar === user.avatar
+                  }
+                >
+                  Save
+                </Button>
+              </View>
             </View>
-            <View style={tailwind("mt-6")}>
-              <Input
-                clearButtonMode="while-editing"
-                onChangeText={setPhoneNumber}
-                placeholder="+4172918894"
-                keyboardType="phone-pad"
-                value={phoneNumber}
-                label="Phone"
-              />
-            </View>
-            <View style={tailwind("mt-10")}>
-              <Button
-                onPress={onSubmit}
-                loading={loading}
-                disabled={
-                  phoneNumber === user.phoneNumber &&
-                  email === user.email &&
-                  name === user.name
-                }
-              >
-                Save
-              </Button>
-            </View>
-          </View>
-        ) : isUserLoading ? (
-          <ActivityIndicator />
-        ) : userError ? (
-          <Text>Failed to retrieve user ({userError.message})</Text>
-        ) : (
-          <Text>User not found</Text>
-        )}
-      </View>
-    </KeyboardAwareScrollView>
+          ) : isUserLoading ? (
+            <ActivityIndicator />
+          ) : userError ? (
+            <Text>Failed to retrieve user ({userError.message})</Text>
+          ) : (
+            <Text>User not found</Text>
+          )}
+        </View>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }

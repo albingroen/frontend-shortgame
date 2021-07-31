@@ -9,21 +9,29 @@ interface IInputProps extends TextInputProps {
 export default function Input({ label, ...rest }: IInputProps) {
   return (
     <View>
-      {label && (
-        <Text style={tailwind("text-lg font-medium text-gray-500")}>
-          {label}
-        </Text>
-      )}
+      {label && <InputLabel>{label}</InputLabel>}
 
       <TextInput
         style={{
           paddingTop: 0,
           paddingBottom: 0,
-          ...tailwind("border border-gray-200 rounded-lg p-4 bg-white mt-1.5"),
+          ...tailwind("border border-gray-200 rounded-lg p-4 bg-white"),
           fontSize: 20,
         }}
         {...rest}
       />
     </View>
+  );
+}
+
+interface IInputLabelProps {
+  children: string;
+}
+
+export function InputLabel({ children }: IInputLabelProps) {
+  return (
+    <Text style={tailwind("text-lg font-medium text-gray-500 mb-1.5")}>
+      {children}
+    </Text>
   );
 }
