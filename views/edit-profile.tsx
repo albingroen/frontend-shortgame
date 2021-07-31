@@ -13,6 +13,7 @@ import {
 import { updateUser, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
 import { wait } from "../lib/utils";
+import { StatusBar } from "expo-status-bar";
 
 export default function EditProfileView() {
   // Server state
@@ -72,6 +73,7 @@ export default function EditProfileView() {
       }
       keyboardOpeningTime={0}
     >
+      <StatusBar style="dark" />
       <View style={tailwind("p-6")}>
         {user ? (
           <View>
