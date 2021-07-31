@@ -104,6 +104,7 @@ export default function StartView({ navigation }) {
               {rounds?.length ? (
                 <ScrollView
                   contentContainerStyle={tailwind("flex-row px-2 py-8")}
+                  showsHorizontalScrollIndicator={false}
                   style={tailwind("-ml-4 -mr-4")}
                   snapToInterval={4 * 48 + 4 * 4}
                   snapToAlignment="start"

@@ -125,7 +125,7 @@ export default function EditProfileView() {
 
                   <View style={tailwind("ml-4")}>
                     <Button onPress={pickImage} size="small">
-                      Change image
+                      Change
                     </Button>
                   </View>
                 </View>
