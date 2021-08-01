@@ -1,9 +1,10 @@
+import * as ImagePicker from "expo-image-picker";
+import Avatar from "../components/avatar";
 import Button from "../components/button";
+import Card from "../components/card";
 import Input, { InputLabel } from "../components/input";
 import React, { useCallback, useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import * as ImagePicker from "expo-image-picker";
 import {
   ActivityIndicator,
   View,
@@ -12,13 +13,12 @@ import {
   RefreshControl,
   SafeAreaView,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StatusBar } from "expo-status-bar";
 import { updateUser, useUser } from "../lib/user";
+import { uploadImage } from "../lib/image";
 import { useFocusEffect } from "@react-navigation/native";
 import { wait } from "../lib/utils";
-import { StatusBar } from "expo-status-bar";
-import Avatar from "../components/avatar";
-import Card from "../components/card";
-import { fetchImageFromUri, uploadImage } from "../lib/image";
 
 export default function EditProfileView() {
   // Server state
@@ -93,12 +93,7 @@ export default function EditProfileView() {
   }, []);
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
+    let result = await ImagePicker.launchImageLibraryAsync();
 
     if (!result.cancelled) {
       setAvatar(result.uri);
