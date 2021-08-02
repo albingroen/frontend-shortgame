@@ -21,3 +21,13 @@ export const getRound = async (id: string) => {
     .then((res) => res.data)
     .catch(() => {});
 };
+
+export const deleteRound = async (id: string) => {
+  const token = await SecureStore.getItemAsync("x-token");
+  return axios
+    .delete(`${apiUrl}/round/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => res.data)
+    .catch(() => {});
+};

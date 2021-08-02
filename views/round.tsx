@@ -3,7 +3,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
 import {
+  ActionSheetIOS,
   ActivityIndicator,
+  Alert,
+  Button,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -11,7 +14,7 @@ import {
   View,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { getRound } from "../lib/round";
+import { deleteRound, getRound } from "../lib/round";
 import { useQuery } from "react-query";
 import { useFocusEffect } from "@react-navigation/native";
 import { wait } from "../lib/utils";
@@ -23,6 +26,7 @@ export default function RoundView({
   },
 }) {
   // Client state
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   // Server state
@@ -43,6 +47,35 @@ export default function RoundView({
     if (round?.createdAt) {
       navigation.setOptions({
         title: moment(round.createdAt).format("YYYY-MM-DD HH:mm"),
+        headerRight: () => (
+          <Button
+            color="red"
+            onPress={() => {
+              ActionSheetIOS.showActionSheetWithOptions(
+                {
+                  options: ["Cancel", "Delete"],
+                  destructiveButtonIndex: 1,
+                  cancelButtonIndex: 0,
+                },
+                (buttonIndex) => {
+                  if (buttonIndex === 1) {
+                    setIsDeleteLoading(true);
+                    deleteRound(round.id)
+                      .then(() => {
+                        navigation.navigate("Start");
+                        setIsDeleteLoading(false);
+                      })
+                      .catch((err) => {
+                        setIsDeleteLoading(false);
+                        Alert.alert(err.response?.data?.message || err.message);
+                      });
+                  }
+                }
+              );
+            }}
+            title="Delete"
+          />
+        ),
       });
     }
   }, [round?.createdAt]);
@@ -57,6 +90,18 @@ export default function RoundView({
 
   return (
     <SafeAreaView style={tailwind("bg-gray-100")}>
+      {isDeleteLoading && (
+        <View
+          style={tailwind(
+            "absolute inset-0 bg-black bg-opacity-50 z-10 justify-center items-center"
+          )}
+        >
+          <Card>
+            <ActivityIndicator />
+          </Card>
+        </View>
+      )}
+
       <StatusBar style="dark" />
       <ScrollView
         refreshControl={
