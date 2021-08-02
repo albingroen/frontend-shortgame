@@ -7,6 +7,7 @@ import tailwind from "tailwind-rn";
 import { Alert, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { apiUrl } from "../lib/config";
+import { useQueryClient } from "react-query";
 
 interface ICreateRoundProps {
   onClose: () => void;
@@ -17,6 +18,10 @@ export default function CreateRound({
   navigation,
   onClose,
 }: ICreateRoundProps) {
+  // Server state
+  const queryClient = useQueryClient();
+
+  // Client state
   const [loading, setLoading] = useState<boolean>(false);
   const [shortPuts, setShortPuts] = useState<string>();
   const [longPuts, setLongPuts] = useState<string>();
@@ -49,7 +54,8 @@ export default function CreateRound({
           },
         }
       )
-      .then((res) => {
+      .then(async (res) => {
+        await queryClient.invalidateQueries("rounds");
         setLoading(false);
         onClose();
         navigation.push("Round", { id: res.data.id });

@@ -1,4 +1,5 @@
 import Card from "../components/card";
+import Loading from "../components/loading";
 import React, { useCallback, useEffect, useState } from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
@@ -15,8 +16,8 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { deleteRound, getRound } from "../lib/round";
-import { useQuery } from "react-query";
 import { useFocusEffect } from "@react-navigation/native";
+import { useQuery, useQueryClient } from "react-query";
 import { wait } from "../lib/utils";
 
 export default function RoundView({
@@ -36,6 +37,8 @@ export default function RoundView({
     error: roundError,
     data: round,
   } = useQuery(`todo/${id}`, () => getRound(id));
+
+  const queryClient = useQueryClient();
 
   const onRefresh = () => {
     refetchRound();
@@ -61,7 +64,8 @@ export default function RoundView({
                   if (buttonIndex === 1) {
                     setIsDeleteLoading(true);
                     deleteRound(round.id)
-                      .then(() => {
+                      .then(async () => {
+                        await queryClient.invalidateQueries("rounds");
                         navigation.navigate("Start");
                         setIsDeleteLoading(false);
                       })
@@ -89,99 +93,97 @@ export default function RoundView({
   }, []);
 
   return (
-    <SafeAreaView style={tailwind("bg-gray-100")}>
-      {isDeleteLoading && (
-        <View
-          style={tailwind(
-            "absolute inset-0 bg-black bg-opacity-50 z-10 justify-center items-center"
-          )}
+    <>
+      {isDeleteLoading && <Loading />}
+
+      <SafeAreaView style={tailwind("bg-gray-100")}>
+        <StatusBar style="dark" />
+        <ScrollView
+          refreshControl={
+            <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
+          }
+          contentContainerStyle={tailwind("p-4 h-full")}
         >
-          <Card>
-            <ActivityIndicator />
-          </Card>
-        </View>
-      )}
-
-      <StatusBar style="dark" />
-      <ScrollView
-        refreshControl={
-          <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
-        }
-        contentContainerStyle={tailwind("p-4 h-full")}
-      >
-        {round ? (
-          <>
-            <Card>
-              <View style={tailwind("flex-row justify-between")}>
-                <Text style={tailwind("text-lg font-medium")}>Short puts</Text>
-                <Text style={tailwind("text-green-500 font-semibold text-lg")}>
-                  {round.shortPuts}pt
-                </Text>
-              </View>
-            </Card>
-
-            <View style={tailwind("mt-4")}>
-              <Card>
-                <View style={tailwind("flex-row justify-between")}>
-                  <Text style={tailwind("text-lg font-medium")}>Long puts</Text>
-                  <Text
-                    style={tailwind("text-green-500 font-semibold text-lg")}
-                  >
-                    {round.longPuts}pt
-                  </Text>
-                </View>
-              </Card>
-            </View>
-
-            <View style={tailwind("mt-4")}>
-              <Card>
-                <View style={tailwind("flex-row justify-between")}>
-                  <Text style={tailwind("text-lg font-medium")}>Chippar</Text>
-                  <Text
-                    style={tailwind("text-green-500 font-semibold text-lg")}
-                  >
-                    {round.chip}pt
-                  </Text>
-                </View>
-              </Card>
-            </View>
-
-            <View style={tailwind("mt-4")}>
-              <Card>
-                <View style={tailwind("flex-row justify-between")}>
-                  <Text style={tailwind("text-lg font-medium")}>Pitches</Text>
-                  <Text
-                    style={tailwind("text-green-500 font-semibold text-lg")}
-                  >
-                    {round.pitch}pt
-                  </Text>
-                </View>
-              </Card>
-            </View>
-
-            <View style={tailwind("mt-4")}>
+          {round ? (
+            <>
               <Card>
                 <View style={tailwind("flex-row justify-between")}>
                   <Text style={tailwind("text-lg font-medium")}>
-                    Bunker shots
+                    Short puts
                   </Text>
                   <Text
                     style={tailwind("text-green-500 font-semibold text-lg")}
                   >
-                    {round.bunker}pt
+                    {round.shortPuts}pt
                   </Text>
                 </View>
               </Card>
-            </View>
-          </>
-        ) : isRoundLoading ? (
-          <ActivityIndicator />
-        ) : (
-          roundError && (
-            <Text>Failed to retrieve round ({roundError.message})</Text>
-          )
-        )}
-      </ScrollView>
-    </SafeAreaView>
+
+              <View style={tailwind("mt-4")}>
+                <Card>
+                  <View style={tailwind("flex-row justify-between")}>
+                    <Text style={tailwind("text-lg font-medium")}>
+                      Long puts
+                    </Text>
+                    <Text
+                      style={tailwind("text-green-500 font-semibold text-lg")}
+                    >
+                      {round.longPuts}pt
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+
+              <View style={tailwind("mt-4")}>
+                <Card>
+                  <View style={tailwind("flex-row justify-between")}>
+                    <Text style={tailwind("text-lg font-medium")}>Chippar</Text>
+                    <Text
+                      style={tailwind("text-green-500 font-semibold text-lg")}
+                    >
+                      {round.chip}pt
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+
+              <View style={tailwind("mt-4")}>
+                <Card>
+                  <View style={tailwind("flex-row justify-between")}>
+                    <Text style={tailwind("text-lg font-medium")}>Pitches</Text>
+                    <Text
+                      style={tailwind("text-green-500 font-semibold text-lg")}
+                    >
+                      {round.pitch}pt
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+
+              <View style={tailwind("mt-4")}>
+                <Card>
+                  <View style={tailwind("flex-row justify-between")}>
+                    <Text style={tailwind("text-lg font-medium")}>
+                      Bunker shots
+                    </Text>
+                    <Text
+                      style={tailwind("text-green-500 font-semibold text-lg")}
+                    >
+                      {round.bunker}pt
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+            </>
+          ) : isRoundLoading ? (
+            <ActivityIndicator />
+          ) : (
+            roundError && (
+              <Text>Failed to retrieve round ({roundError.message})</Text>
+            )
+          )}
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 }
