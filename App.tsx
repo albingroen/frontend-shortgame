@@ -1,5 +1,6 @@
 import EditProfileView from "./views/edit-profile";
 import LoginPhoneConfirmView from "./views/login-phone-confirm";
+import LeaderboardView from "./views/leaderboard.tsx";
 import LoginPhoneView from "./views/login-phone";
 import LoginStartView from "./views/login-start";
 import ProfileView from "./views/profile";
@@ -44,6 +45,11 @@ export default function App() {
             options={{ headerTitle: "Edit profile" }}
             component={EditProfileView}
             name="EditProfile"
+          />
+          <Stack.Screen
+            options={{ headerTitle: "Leaderboard" }}
+            component={LeaderboardView}
+            name="Leaderboard"
           />
         </Stack.Navigator>
       </NavigationContainer>

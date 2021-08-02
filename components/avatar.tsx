@@ -5,7 +5,7 @@ import { classNames } from "../lib/utils";
 
 interface IAvatarProps {
   size?: "default" | "large";
-  src: string;
+  src?: string;
 }
 
 export default function Avatar({ size = "default", src }: IAvatarProps) {

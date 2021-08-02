@@ -5,10 +5,11 @@ import { View, SafeAreaView, ActivityIndicator } from "react-native";
 import Button from "../components/button";
 import { useQuery } from "react-query";
 import { getUser } from "../lib/user";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
-export default function LoginStartView({ navigation }) {
+export default function LoginStartView() {
   const { data, isLoading, error } = useQuery("user", getUser);
+  const navigation = useNavigation();
   const isFocused = useIsFocused();
 
   useEffect(() => {

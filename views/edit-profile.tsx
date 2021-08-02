@@ -26,7 +26,7 @@ export default function EditProfileView() {
     isLoading: isUserLoading,
     refetch: refetchUser,
     error: userError,
-    user,
+    data: user,
   } = useUser();
 
   const onRefresh = () => {

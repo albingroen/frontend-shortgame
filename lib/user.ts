@@ -1,7 +1,8 @@
 import * as SecureStore from "expo-secure-store";
-import { apiUrl } from "./config";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { IUser } from "../types";
+import { UseQueryResult, useQuery } from "react-query";
+import { apiUrl } from "./config";
 
 export const getUser = async () => {
   const token = await SecureStore.getItemAsync("x-token");
@@ -29,13 +30,13 @@ export const logout = async (navigation) => {
   });
 };
 
-export const useUser = () => {
-  const { data, isLoading, error, refetch } = useQuery("user", getUser);
+export const useUser = (): UseQueryResult<IUser> => {
+  return useQuery("user", getUser);
+};
 
-  return {
-    user: data,
-    isLoading,
-    refetch,
-    error,
-  };
+export const getLeaderboard = async () => {
+  return axios
+    .get(`${apiUrl}/user/leaderboard`)
+    .then((res) => res.data)
+    .catch(() => {});
 };

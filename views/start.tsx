@@ -1,9 +1,12 @@
+import * as Haptics from "expo-haptics";
+import Avatar from "../components/avatar";
 import Button from "../components/button";
 import Card from "../components/card";
+import CreateRound from "../components/create-round";
+import Empty from "../components/empty";
 import React, { useCallback, useState } from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
-import * as Haptics from "expo-haptics";
 import {
   ActivityIndicator,
   Modal,
@@ -15,15 +18,11 @@ import {
   View,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { logout, useUser } from "../lib/user";
-import Avatar from "../components/avatar";
-import { useQuery } from "react-query";
 import { getRounds } from "../lib/round";
-import CreateRound from "../components/create-round";
+import { logout, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
-import Empty from "../components/empty";
+import { useQuery } from "react-query";
 import { wait } from "../lib/utils";
-import Loading from "../components/loading";
 
 export default function StartView({ navigation }) {
   // Server state
@@ -31,7 +30,7 @@ export default function StartView({ navigation }) {
     isLoading: isUserLoading,
     refetch: refetchUser,
     error: userError,
-    user,
+    data: user,
   } = useUser();
 
   const {
@@ -172,6 +171,25 @@ export default function StartView({ navigation }) {
                 )}
 
                 <View style={tailwind("h-px w-full bg-gray-200")} />
+
+                <View style={tailwind("mt-8")}>
+                  <Card>
+                    <Text style={tailwind("text-xl font-semibold")}>
+                      Leaderboard
+                    </Text>
+
+                    <View style={tailwind("mt-3 mb-1.5")}>
+                      <Button
+                        onPress={() => {
+                          navigation.navigate("Leaderboard");
+                        }}
+                        size="small"
+                      >
+                        View leaderboard
+                      </Button>
+                    </View>
+                  </Card>
+                </View>
 
                 <View style={tailwind("mt-8")}>
                   <Card>
