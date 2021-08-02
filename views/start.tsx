@@ -165,31 +165,27 @@ export default function StartView({ navigation }) {
                         Failed to retrieve rounds ({roundsError.message})
                       </Text>
                     ) : (
-                      <Empty>No registered rounds yet...</Empty>
+                      <Empty>No registered rounds yet</Empty>
                     )}
                   </View>
                 )}
 
-                <View style={tailwind("h-px w-full bg-gray-200")} />
+                <Card>
+                  <Text style={tailwind("text-xl font-semibold")}>
+                    Leaderboard
+                  </Text>
 
-                <View style={tailwind("mt-8")}>
-                  <Card>
-                    <Text style={tailwind("text-xl font-semibold")}>
-                      Leaderboard
-                    </Text>
-
-                    <View style={tailwind("mt-3 mb-1.5")}>
-                      <Button
-                        onPress={() => {
-                          navigation.navigate("Leaderboard");
-                        }}
-                        size="small"
-                      >
-                        View leaderboard
-                      </Button>
-                    </View>
-                  </Card>
-                </View>
+                  <View style={tailwind("mt-3 mb-1.5")}>
+                    <Button
+                      onPress={() => {
+                        navigation.navigate("Leaderboard");
+                      }}
+                      size="small"
+                    >
+                      View leaderboard
+                    </Button>
+                  </View>
+                </Card>
 
                 <View style={tailwind("mt-8")}>
                   <Card>
