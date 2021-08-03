@@ -4,17 +4,9 @@ import Button from "../components/button";
 import Card from "../components/card";
 import Input, { InputLabel } from "../components/input";
 import React, { useCallback, useEffect, useState } from "react";
+import Screen from "../components/screen";
 import tailwind from "tailwind-rn";
-import {
-  ActivityIndicator,
-  View,
-  Text,
-  Alert,
-  RefreshControl,
-  SafeAreaView,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { StatusBar } from "expo-status-bar";
+import { View, Text, Alert, RefreshControl } from "react-native";
 import { updateUser, useUser } from "../lib/user";
 import { uploadImage } from "../lib/image";
 import { useFocusEffect } from "@react-navigation/native";
@@ -102,87 +94,81 @@ export default function EditProfileView() {
   };
 
   return (
-    <SafeAreaView style={tailwind("bg-gray-100")}>
-      <StatusBar style="dark" />
+    <Screen
+      refreshControl={
+        <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
+      }
+      loading={isUserLoading}
+      title="Settings"
+      scroll
+    >
+      {user ? (
+        <View>
+          <InputLabel>Profilbild</InputLabel>
+          <Card>
+            <View style={tailwind("flex-row items-center")}>
+              <Avatar src={avatar} />
 
-      <KeyboardAwareScrollView
-        refreshControl={
-          <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
-        }
-        keyboardOpeningTime={0}
-      >
-        <View style={tailwind("p-4")}>
-          {user ? (
-            <View>
-              <InputLabel>Profilbild</InputLabel>
-              <Card>
-                <View style={tailwind("flex-row items-center")}>
-                  <Avatar src={avatar} />
-
-                  <View style={tailwind("ml-4")}>
-                    <Button onPress={pickImage} size="small">
-                      Ändra bild
-                    </Button>
-                  </View>
-                </View>
-              </Card>
-
-              <View style={tailwind("mt-6")}>
-                <Input
-                  clearButtonMode="while-editing"
-                  onChangeText={setName}
-                  placeholder="John Doe"
-                  autoCapitalize="none"
-                  value={name}
-                  label="Namn"
-                />
-              </View>
-
-              <View style={tailwind("mt-6")}>
-                <Input
-                  placeholder="john.doe@mail.com"
-                  clearButtonMode="while-editing"
-                  keyboardType="email-address"
-                  onChangeText={setEmail}
-                  autoCapitalize="none"
-                  value={email}
-                  label="Email"
-                />
-              </View>
-              <View style={tailwind("mt-6")}>
-                <Input
-                  clearButtonMode="while-editing"
-                  onChangeText={setPhoneNumber}
-                  placeholder="+4172918894"
-                  keyboardType="phone-pad"
-                  value={phoneNumber}
-                  label="Mobilnr"
-                />
-              </View>
-              <View style={tailwind("mt-10")}>
-                <Button
-                  onPress={onSubmit}
-                  loading={loading}
-                  disabled={
-                    phoneNumber === user.phoneNumber &&
-                    email === user.email &&
-                    name === user.name &&
-                    avatar === user.avatar
-                  }
-                >
-                  Spara
+              <View style={tailwind("ml-4")}>
+                <Button onPress={pickImage} size="small">
+                  Ändra bild
                 </Button>
               </View>
             </View>
-          ) : isUserLoading ? (
-            <ActivityIndicator size="large" />
-          ) : userError ? (
-            <Text>Lyckades inte hitta din användare ({userError.message})</Text>
-          ) : (
-            <Text>Något gick fel</Text>
-          )}
+          </Card>
+
+          <View style={tailwind("mt-6")}>
+            <Input
+              clearButtonMode="while-editing"
+              onChangeText={setName}
+              placeholder="John Doe"
+              autoCapitalize="none"
+              value={name}
+              label="Namn"
+            />
+          </View>
+
+          <View style={tailwind("mt-6")}>
+            <Input
+              placeholder="john.doe@mail.com"
+              clearButtonMode="while-editing"
+              keyboardType="email-address"
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              value={email}
+              label="Email"
+            />
+          </View>
+          <View style={tailwind("mt-6")}>
+            <Input
+              clearButtonMode="while-editing"
+              onChangeText={setPhoneNumber}
+              placeholder="+4172918894"
+              keyboardType="phone-pad"
+              value={phoneNumber}
+              label="Mobilnr"
+            />
+          </View>
+          <View style={tailwind("mt-10")}>
+            <Button
+              onPress={onSubmit}
+              loading={loading}
+              disabled={
+                phoneNumber === user.phoneNumber &&
+                email === user.email &&
+                name === user.name &&
+                avatar === user.avatar
+              }
+            >
+              Spara
+            </Button>
+          </View>
         </View>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+      ) : userError ? (
+        <Text>Lyckades inte hitta din användare ({userError.message})</Text>
+      ) : (
+        <Text>Något gick fel</Text>
+      )}
+    </Screen>
   );
 }

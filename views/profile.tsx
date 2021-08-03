@@ -1,20 +1,13 @@
 import Avatar from "../components/avatar";
-import React, { useCallback, useState } from "react";
-import tailwind from "tailwind-rn";
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-  RefreshControl,
-} from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { logout, useUser } from "../lib/user";
-import { useFocusEffect } from "@react-navigation/native";
 import Button from "../components/button";
 import Card from "../components/card";
+import React, { useCallback, useState } from "react";
+import Screen from "../components/screen";
+import tailwind from "tailwind-rn";
 import { Confirm, wait } from "../lib/utils";
+import { Text, View, RefreshControl } from "react-native";
+import { logout, useUser } from "../lib/user";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ProfileView({ navigation }) {
   // Client state
@@ -43,56 +36,52 @@ export default function ProfileView({ navigation }) {
   }, []);
 
   return (
-    <SafeAreaView style={tailwind("bg-gray-100")}>
-      <StatusBar style="dark" />
-      <ScrollView
-        refreshControl={
-          <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
-        }
-        contentContainerStyle={tailwind("p-4 h-full")}
-      >
-        {user ? (
-          <View>
-            <View style={tailwind("items-center mb-5")}>
-              <Avatar size="large" src={user.avatar} />
-              <Text style={tailwind("text-center text-xl font-semibold mt-4")}>
-                {user.name}
-              </Text>
-            </View>
-
-            <Card>
-              <Text style={tailwind("text-gray-500 font-medium text-lg")}>
-                Mitt handicap
-              </Text>
-              <Text
-                style={tailwind("text-3xl font-semibold text-green-500 mt-1")}
-              >
-                {user.handicap}
-              </Text>
-            </Card>
-
-            <View style={tailwind("mt-10")}>
-              <Button
-                onPress={() => {
-                  Confirm({
-                    labelConfirm: "Logga ut",
-                    onConfirm: () => logout(navigation),
-                  });
-                }}
-                icon="&rarr;"
-              >
-                Logga ut
-              </Button>
-            </View>
+    <Screen
+      refreshControl={
+        <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
+      }
+      loading={isUserLoading}
+      scroll
+    >
+      {user ? (
+        <View>
+          <View style={tailwind("items-center mb-5")}>
+            <Avatar size="large" src={user.avatar} />
+            <Text style={tailwind("text-center text-xl font-semibold mt-4")}>
+              {user.name}
+            </Text>
           </View>
-        ) : isUserLoading ? (
-          <ActivityIndicator size="large" />
-        ) : userError ? (
-          <Text>Lyckades inte hitta din användare ({userError.message})</Text>
-        ) : (
-          <Text>Något gick fel</Text>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+
+          <Card>
+            <Text style={tailwind("text-gray-500 font-medium text-lg")}>
+              Mitt handicap
+            </Text>
+            <Text
+              style={tailwind("text-3xl font-semibold text-green-500 mt-1")}
+            >
+              {user.handicap}
+            </Text>
+          </Card>
+
+          <View style={tailwind("mt-10")}>
+            <Button
+              onPress={() => {
+                Confirm({
+                  labelConfirm: "Logga ut",
+                  onConfirm: () => logout(navigation),
+                });
+              }}
+              icon="&rarr;"
+            >
+              Logga ut
+            </Button>
+          </View>
+        </View>
+      ) : userError ? (
+        <Text>Lyckades inte hitta din användare ({userError.message})</Text>
+      ) : (
+        <Text>Något gick fel</Text>
+      )}
+    </Screen>
   );
 }

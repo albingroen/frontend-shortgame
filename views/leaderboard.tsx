@@ -1,21 +1,14 @@
-import React, { useCallback, useState } from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { StatusBar } from "expo-status-bar";
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  SafeAreaView,
-  Text,
-  View,
-} from "react-native";
-import tailwind from "tailwind-rn";
-import { useQuery } from "react-query";
-import { getLeaderboard, useUser } from "../lib/user";
-import Card from "../components/card";
-import { classNames, wait } from "../lib/utils";
 import Avatar from "../components/avatar";
+import Card from "../components/card";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import React, { useCallback, useState } from "react";
+import Screen from "../components/screen";
+import tailwind from "tailwind-rn";
+import { FlatList, RefreshControl, Text, View } from "react-native";
+import { classNames, wait } from "../lib/utils";
+import { getLeaderboard, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
+import { useQuery } from "react-query";
 
 export default function LeaderboardView() {
   // Server state
@@ -44,25 +37,19 @@ export default function LeaderboardView() {
   }, []);
 
   return (
-    <SafeAreaView style={tailwind("bg-gray-100")}>
-      <StatusBar style="dark" />
-
+    <Screen loading={isLoading} title="Leaderboard">
       {data ? (
         <FlatList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
-          style={tailwind("p-4 min-h-full")}
           keyExtractor={(item) => item.id}
           data={data}
           renderItem={(user) => {
             const isMe = user.item.id === loggedInUser?.id;
 
             return (
-              <View
-                style={tailwind(classNames(user.index ? "mt-4" : "mt-0"))}
-                key={user.item.id}
-              >
+              <View style={tailwind("mb-4")} key={user.item.id}>
                 <Card>
                   <View
                     style={tailwind("flex-row justify-between items-center")}
@@ -99,17 +86,11 @@ export default function LeaderboardView() {
             );
           }}
         />
+      ) : error ? (
+        <Text>Lyckades inte hämta leaderboarden ({error.message})</Text>
       ) : (
-        <View style={tailwind("p-4")}>
-          {isLoading ? (
-            <ActivityIndicator size="large" />
-          ) : error ? (
-            <Text>Lyckades inte hämta leaderboarden ({error.message})</Text>
-          ) : (
-            <Text>Något gick fel</Text>
-          )}
-        </View>
+        <Text>Något gick fel</Text>
       )}
-    </SafeAreaView>
+    </Screen>
   );
 }
