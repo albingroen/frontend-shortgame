@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
 import {
   ActivityIndicator,
@@ -10,7 +11,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 import { useQuery } from "react-query";
-import { getLeaderboard } from "../lib/user";
+import { getLeaderboard, useUser } from "../lib/user";
 import Card from "../components/card";
 import { classNames, wait } from "../lib/utils";
 import Avatar from "../components/avatar";
@@ -18,6 +19,8 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function LeaderboardView() {
   // Server state
+  const { data: loggedInUser } = useUser();
+
   const { data, isLoading, error, refetch } = useQuery(
     "leaderboard",
     getLeaderboard
@@ -52,31 +55,49 @@ export default function LeaderboardView() {
           style={tailwind("p-4 min-h-full")}
           keyExtractor={(item) => item.id}
           data={data}
-          renderItem={(user) => (
-            <View
-              style={tailwind(classNames(user.index ? "mt-4" : "mt-0"))}
-              key={user.item.id}
-            >
-              <Card>
-                <View style={tailwind("flex-row justify-between items-center")}>
-                  <View style={tailwind("flex-row items-center")}>
-                    <View style={tailwind("mr-4")}>
-                      <Avatar src={user.item.avatar} />
+          renderItem={(user) => {
+            const isMe = user.item.id === loggedInUser?.id;
+
+            return (
+              <View
+                style={tailwind(classNames(user.index ? "mt-4" : "mt-0"))}
+                key={user.item.id}
+              >
+                <Card>
+                  <View
+                    style={tailwind("flex-row justify-between items-center")}
+                  >
+                    <View style={tailwind("flex-row items-center")}>
+                      <View style={tailwind("mr-4")}>
+                        <Avatar src={user.item.avatar} />
+                      </View>
+                      <Text
+                        style={tailwind(
+                          classNames("text-lg font-medium", isMe && "mr-2")
+                        )}
+                      >
+                        {user.item.name || "No name"}
+                      </Text>
+
+                      {isMe && (
+                        <Ionicons
+                          color={tailwind("text-gray-300").color}
+                          name="ios-person"
+                          size={20}
+                        />
+                      )}
                     </View>
-                    <Text style={tailwind("text-lg font-medium")}>
-                      {user.item.name}
+
+                    <Text
+                      style={tailwind("text-green-500 font-semibold text-lg")}
+                    >
+                      {user.item.handicap.toFixed(1)}
                     </Text>
                   </View>
-
-                  <Text
-                    style={tailwind("text-green-500 font-semibold text-lg")}
-                  >
-                    {user.item.handicap.toFixed(1)}
-                  </Text>
-                </View>
-              </Card>
-            </View>
-          )}
+                </Card>
+              </View>
+            );
+          }}
         />
       ) : (
         <View style={tailwind("p-4")}>

@@ -29,7 +29,7 @@ export default function GuideBranchView({
       <StatusBar style="dark" />
       <ScrollView contentContainerStyle={tailwind("p-4 min-h-full")}>
         {branch.sections?.map((section) => (
-          <View style={tailwind("mb-87")} key={section.title}>
+          <View style={tailwind("mb-8")} key={section.title}>
             <Text style={tailwind("text-2xl font-semibold")}>
               {section.title}
             </Text>
