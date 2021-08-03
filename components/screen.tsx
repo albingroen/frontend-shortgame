@@ -23,7 +23,7 @@ export default function Screen({
 }: IScreenProps) {
   if (loading) {
     return (
-      <SafeAreaView style={tailwind("bg-gray-100")}>
+      <SafeAreaView style={tailwind("bg-gray-100 p-4")}>
         <StatusBar style="dark" />
         <ActivityIndicator size="large" />
       </SafeAreaView>

@@ -37,33 +37,35 @@ export default function LeaderboardView() {
   }, []);
 
   return (
-    <Screen loading={isLoading} title="Leaderboard">
+    <Screen
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
+      loading={isLoading}
+      title="Leaderboard"
+      scroll
+    >
       {data ? (
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-          }
-          keyExtractor={(item) => item.id}
-          data={data}
-          renderItem={(user) => {
-            const isMe = user.item.id === loggedInUser?.id;
+        <>
+          {data.map((user) => {
+            const isMe = user.id === loggedInUser?.id;
 
             return (
-              <View style={tailwind("mb-4")} key={user.item.id}>
+              <View style={tailwind("mb-4")} key={user.id}>
                 <Card>
                   <View
                     style={tailwind("flex-row justify-between items-center")}
                   >
                     <View style={tailwind("flex-row items-center")}>
                       <View style={tailwind("mr-4")}>
-                        <Avatar src={user.item.avatar} />
+                        <Avatar src={user.avatar} />
                       </View>
                       <Text
                         style={tailwind(
                           classNames("text-lg font-medium", isMe && "mr-2")
                         )}
                       >
-                        {user.item.name || "No name"}
+                        {user.name || "No name"}
                       </Text>
 
                       {isMe && (
@@ -78,14 +80,14 @@ export default function LeaderboardView() {
                     <Text
                       style={tailwind("text-green-500 font-semibold text-lg")}
                     >
-                      {user.item.handicap.toFixed(1)}
+                      {user.handicap.toFixed(1)}
                     </Text>
                   </View>
                 </Card>
               </View>
             );
-          }}
-        />
+          })}
+        </>
       ) : error ? (
         <Text>Lyckades inte hämta leaderboarden ({error.message})</Text>
       ) : (
