@@ -93,7 +93,7 @@ export default function App() {
             name="LoginPhoneConfirm"
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
             component={TabViews}
             name="Home"
           />

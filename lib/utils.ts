@@ -8,7 +8,7 @@ export function wait(timeout: number) {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 }
 
-export default function Confirm({
+export function Confirm({
   labelCancel,
   labelConfirm,
   onConfirm,

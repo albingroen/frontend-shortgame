@@ -17,7 +17,7 @@ import { StatusBar } from "expo-status-bar";
 import { deleteRound, getRound } from "../lib/round";
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery, useQueryClient } from "react-query";
-import Confirm, { wait } from "../lib/utils";
+import { Confirm, wait } from "../lib/utils";
 
 export default function RoundView({
   navigation,

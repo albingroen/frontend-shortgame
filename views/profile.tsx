@@ -14,7 +14,7 @@ import { logout, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
 import Button from "../components/button";
 import Card from "../components/card";
-import Confirm, { wait } from "../lib/utils";
+import { Confirm, wait } from "../lib/utils";
 
 export default function ProfileView({ navigation }) {
   // Client state
