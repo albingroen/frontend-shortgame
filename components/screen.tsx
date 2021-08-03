@@ -25,7 +25,7 @@ export default function Screen({
     return (
       <SafeAreaView style={tailwind("bg-gray-100 p-4")}>
         <StatusBar style="dark" />
-        <ActivityIndicator size="large" />
+        <ActivityIndicator style={tailwind("mt-6")} size="large" />
       </SafeAreaView>
     );
   }
