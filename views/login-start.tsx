@@ -1,20 +1,19 @@
+import Button from "../components/button";
 import React, { useEffect } from "react";
 import tailwind from "tailwind-rn";
 import { StatusBar } from "expo-status-bar";
 import { View, SafeAreaView, ActivityIndicator } from "react-native";
-import Button from "../components/button";
-import { useQuery } from "react-query";
 import { getUser } from "../lib/user";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
+import { useQuery } from "react-query";
 
-export default function LoginStartView() {
+export default function LoginStartView({ navigation }) {
   const { data, isLoading, error } = useQuery("user", getUser);
-  const navigation = useNavigation();
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (data && !isLoading && !error && isFocused) {
-      navigation.navigate("Start");
+      navigation.navigate("Home");
     }
   }, [data, isLoading, error]);
 

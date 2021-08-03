@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
 import {
-  ActionSheetIOS,
   ActivityIndicator,
   Alert,
   Button,
@@ -18,7 +17,7 @@ import { StatusBar } from "expo-status-bar";
 import { deleteRound, getRound } from "../lib/round";
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery, useQueryClient } from "react-query";
-import { wait } from "../lib/utils";
+import Confirm, { wait } from "../lib/utils";
 
 export default function RoundView({
   navigation,
@@ -54,28 +53,22 @@ export default function RoundView({
           <Button
             color="red"
             onPress={() => {
-              ActionSheetIOS.showActionSheetWithOptions(
-                {
-                  options: ["Cancel", "Delete"],
-                  destructiveButtonIndex: 1,
-                  cancelButtonIndex: 0,
+              Confirm({
+                labelConfirm: "Delete",
+                onConfirm: () => {
+                  setIsDeleteLoading(true);
+                  deleteRound(round.id)
+                    .then(async () => {
+                      await queryClient.invalidateQueries("rounds");
+                      navigation.navigate("Home");
+                      setIsDeleteLoading(false);
+                    })
+                    .catch((err) => {
+                      setIsDeleteLoading(false);
+                      Alert.alert(err.response?.data?.message || err.message);
+                    });
                 },
-                (buttonIndex) => {
-                  if (buttonIndex === 1) {
-                    setIsDeleteLoading(true);
-                    deleteRound(round.id)
-                      .then(async () => {
-                        await queryClient.invalidateQueries("rounds");
-                        navigation.navigate("Start");
-                        setIsDeleteLoading(false);
-                      })
-                      .catch((err) => {
-                        setIsDeleteLoading(false);
-                        Alert.alert(err.response?.data?.message || err.message);
-                      });
-                  }
-                }
-              );
+              });
             }}
             title="Delete"
           />

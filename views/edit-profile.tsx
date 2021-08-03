@@ -34,6 +34,7 @@ export default function EditProfileView() {
   };
 
   useFocusEffect(useCallback(onRefresh, []));
+
   // Client state
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
@@ -110,7 +111,7 @@ export default function EditProfileView() {
         }
         keyboardOpeningTime={0}
       >
-        <View style={tailwind("p-6")}>
+        <View style={tailwind("p-4")}>
           {user ? (
             <View>
               <InputLabel>Avatar</InputLabel>

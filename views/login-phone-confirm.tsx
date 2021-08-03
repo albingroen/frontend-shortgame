@@ -33,7 +33,7 @@ export default function LoginPhoneConfirmView({
       })
       .then((res) => {
         SecureStore.setItemAsync("x-token", res.data);
-        navigation.navigate("Start");
+        navigation.navigate("Home");
         setLoading(false);
       })
       .catch((err) => {

@@ -1,8 +1,7 @@
 import Avatar from "../components/avatar";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import tailwind from "tailwind-rn";
 import {
-  Button as RNButton,
   ActivityIndicator,
   SafeAreaView,
   ScrollView,
@@ -15,7 +14,7 @@ import { logout, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
 import Button from "../components/button";
 import Card from "../components/card";
-import { wait } from "../lib/utils";
+import Confirm, { wait } from "../lib/utils";
 
 export default function ProfileView({ navigation }) {
   // Client state
@@ -34,19 +33,6 @@ export default function ProfileView({ navigation }) {
   };
 
   useFocusEffect(useCallback(onRefresh, []));
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <RNButton
-          onPress={() => {
-            navigation.push("EditProfile");
-          }}
-          title="Edit"
-        />
-      ),
-    });
-  }, []);
 
   const handleRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -67,7 +53,7 @@ export default function ProfileView({ navigation }) {
       >
         {user ? (
           <View>
-            <View style={tailwind("items-center py-5")}>
+            <View style={tailwind("items-center mb-5")}>
               <Avatar size="large" src={user.avatar} />
               <Text style={tailwind("text-center text-xl font-semibold mt-4")}>
                 {user.name}
@@ -86,7 +72,15 @@ export default function ProfileView({ navigation }) {
             </Card>
 
             <View style={tailwind("mt-10")}>
-              <Button onPress={logout} icon="&rarr;">
+              <Button
+                onPress={() => {
+                  Confirm({
+                    labelConfirm: "Log Out",
+                    onConfirm: () => logout(navigation),
+                  });
+                }}
+                icon="&rarr;"
+              >
                 Log Out
               </Button>
             </View>

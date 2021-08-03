@@ -53,8 +53,11 @@ export default function LeaderboardView() {
           keyExtractor={(item) => item.id}
           data={data}
           renderItem={(user) => (
-            <View style={tailwind(classNames(user.index ? "mt-4" : "mt-0"))}>
-              <Card key={user.item.id}>
+            <View
+              style={tailwind(classNames(user.index ? "mt-4" : "mt-0"))}
+              key={user.item.id}
+            >
+              <Card>
                 <View style={tailwind("flex-row justify-between items-center")}>
                   <View style={tailwind("flex-row items-center")}>
                     <View style={tailwind("mr-4")}>
