@@ -22,7 +22,7 @@ export default function LoginStartView({ navigation }) {
       <StatusBar style="dark" />
       <View style={tailwind("p-4 h-full justify-center")}>
         {isLoading ? (
-          <ActivityIndicator />
+          <ActivityIndicator size="large" />
         ) : (
           <Button
             onPress={() => {

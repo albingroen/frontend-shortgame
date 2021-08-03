@@ -169,7 +169,7 @@ export default function RoundView({
               </View>
             </>
           ) : isRoundLoading ? (
-            <ActivityIndicator />
+            <ActivityIndicator size="large" />
           ) : (
             roundError && (
               <Text>Failed to retrieve round ({roundError.message})</Text>

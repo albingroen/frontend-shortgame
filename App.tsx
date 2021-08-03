@@ -8,10 +8,12 @@ import ProfileView from "./views/profile";
 import React from "react";
 import RoundView from "./views/round";
 import StartView from "./views/start";
+import GuideView from "./views/guide";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import GuideBranchView from "./views/guide-branch";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -95,6 +97,8 @@ export default function App() {
             component={TabViews}
             name="Home"
           />
+          <Stack.Screen component={GuideView} name="Guide" />
+          <Stack.Screen component={GuideBranchView} name="GuideBranch" />
           <Stack.Screen component={RoundView} name="Round" />
         </Stack.Navigator>
       </NavigationContainer>

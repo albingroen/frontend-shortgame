@@ -81,7 +81,7 @@ export default function LeaderboardView() {
       ) : (
         <View style={tailwind("p-4")}>
           {isLoading ? (
-            <ActivityIndicator />
+            <ActivityIndicator size="large" />
           ) : error ? (
             <Text>Failed to retrieve leaderboard ({error.message})</Text>
           ) : (

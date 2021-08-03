@@ -175,7 +175,7 @@ export default function EditProfileView() {
               </View>
             </View>
           ) : isUserLoading ? (
-            <ActivityIndicator />
+            <ActivityIndicator size="large" />
           ) : userError ? (
             <Text>Failed to retrieve user ({userError.message})</Text>
           ) : (

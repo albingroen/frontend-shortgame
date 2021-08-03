@@ -4,6 +4,7 @@ import Button from "../components/button";
 import Card from "../components/card";
 import CreateRound from "../components/create-round";
 import Empty from "../components/empty";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useCallback, useState } from "react";
 import moment from "moment";
 import tailwind from "tailwind-rn";
@@ -159,7 +160,7 @@ export default function StartView({ navigation }) {
                 ) : (
                   <View style={tailwind("my-8")}>
                     {isRoundsLoading ? (
-                      <ActivityIndicator />
+                      <ActivityIndicator size="large" />
                     ) : roundsError ? (
                       <Text>
                         Failed to retrieve rounds ({roundsError.message})
@@ -169,6 +170,29 @@ export default function StartView({ navigation }) {
                     )}
                   </View>
                 )}
+
+                <View>
+                  <Text
+                    style={tailwind(
+                      "text-base font-semibold tracking-wide text-gray-500 mb-1.5 uppercase"
+                    )}
+                  >
+                    Tutorial guide
+                  </Text>
+                  <View style={tailwind("mt-2")}>
+                    <Button
+                      onPress={() => {
+                        navigation.navigate("Guide");
+                      }}
+                      icon={
+                        <Ionicons name="ios-bookmark" size={16} color="#888" />
+                      }
+                      size="small"
+                    >
+                      Read tutorial
+                    </Button>
+                  </View>
+                </View>
               </View>
 
               <Modal
@@ -183,7 +207,7 @@ export default function StartView({ navigation }) {
               </Modal>
             </>
           ) : isUserLoading ? (
-            <ActivityIndicator />
+            <ActivityIndicator size="large" />
           ) : userError ? (
             <Text>Failed to find user ({userError.message})</Text>
           ) : (

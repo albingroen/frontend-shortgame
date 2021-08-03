@@ -86,7 +86,7 @@ export default function ProfileView({ navigation }) {
             </View>
           </View>
         ) : isUserLoading ? (
-          <ActivityIndicator />
+          <ActivityIndicator size="large" />
         ) : userError ? (
           <Text>Failed to retrieve user ({userError.message})</Text>
         ) : (
