@@ -62,7 +62,7 @@ export default function ProfileView({ navigation }) {
 
             <Card>
               <Text style={tailwind("text-gray-500 font-medium text-lg")}>
-                My handicap:
+                Mitt handicap
               </Text>
               <Text
                 style={tailwind("text-3xl font-semibold text-green-500 mt-1")}
@@ -75,22 +75,22 @@ export default function ProfileView({ navigation }) {
               <Button
                 onPress={() => {
                   Confirm({
-                    labelConfirm: "Log Out",
+                    labelConfirm: "Logga ut",
                     onConfirm: () => logout(navigation),
                   });
                 }}
                 icon="&rarr;"
               >
-                Log Out
+                Logga ut
               </Button>
             </View>
           </View>
         ) : isUserLoading ? (
           <ActivityIndicator size="large" />
         ) : userError ? (
-          <Text>Failed to retrieve user ({userError.message})</Text>
+          <Text>Lyckades inte hitta din användare ({userError.message})</Text>
         ) : (
-          <Text>User not found</Text>
+          <Text>Något gick fel</Text>
         )}
       </ScrollView>
     </SafeAreaView>

@@ -25,6 +25,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useQuery } from "react-query";
 import { wait } from "../lib/utils";
 
+moment.locale("sv-SE");
+
 export default function StartView({ navigation }) {
   // Server state
   const {
@@ -87,13 +89,13 @@ export default function StartView({ navigation }) {
                 </View>
 
                 <Text style={tailwind("text-4xl mt-6 font-bold")}>
-                  Welcome, back
+                  Välkommen
                 </Text>
                 <Text
                   style={tailwind("text-lg text-gray-500 mt-4 font-medium")}
                 >
-                  Here you can see your past rounds, your handicap, and register
-                  a new round.
+                  Här kan du se tidigare rundor, registrera en ny, eller läsa
+                  hur det fungerar.
                 </Text>
                 <View style={tailwind("mt-6")}>
                   <Button
@@ -101,7 +103,7 @@ export default function StartView({ navigation }) {
                     type="primary"
                     icon="&rarr;"
                   >
-                    New round
+                    Ny runda
                   </Button>
                 </View>
 
@@ -150,7 +152,7 @@ export default function StartView({ navigation }) {
                               }}
                               size="small"
                             >
-                              View
+                              Visa
                             </Button>
                           </View>
                         </Card>
@@ -163,10 +165,10 @@ export default function StartView({ navigation }) {
                       <ActivityIndicator size="large" />
                     ) : roundsError ? (
                       <Text>
-                        Failed to retrieve rounds ({roundsError.message})
+                        Lyckades inte hämta dina rundor ({roundsError.message})
                       </Text>
                     ) : (
-                      <Empty>No registered rounds yet</Empty>
+                      <Empty>Inga registrerade rundor ännu</Empty>
                     )}
                   </View>
                 )}
@@ -177,7 +179,7 @@ export default function StartView({ navigation }) {
                       "text-base font-semibold tracking-wide text-gray-500 mb-1.5 uppercase"
                     )}
                   >
-                    Tutorial guide
+                    Hur fungerar det?
                   </Text>
                   <View style={tailwind("mt-2")}>
                     <Button
@@ -189,7 +191,7 @@ export default function StartView({ navigation }) {
                       }
                       size="small"
                     >
-                      Read tutorial
+                      Guide
                     </Button>
                   </View>
                 </View>
@@ -209,17 +211,17 @@ export default function StartView({ navigation }) {
           ) : isUserLoading ? (
             <ActivityIndicator size="large" />
           ) : userError ? (
-            <Text>Failed to find user ({userError.message})</Text>
+            <Text>Lyckades inte hitta din användare ({userError.message})</Text>
           ) : (
             <View>
-              <Text>Something went wrong</Text>
+              <Text>Något gick fel</Text>
               <View style={tailwind("mt-6")}>
                 <Button
                   onPress={() => {
                     refetchUser();
                   }}
                 >
-                  Try again
+                  Försök igen
                 </Button>
               </View>
               <View style={tailwind("mt-6")}>
@@ -228,7 +230,7 @@ export default function StartView({ navigation }) {
                     logout(navigation);
                   }}
                 >
-                  Log out
+                  Logga ut
                 </Button>
               </View>
             </View>

@@ -42,7 +42,7 @@ export default function GuideBranchView({
               </Text>
             )}
 
-            {section.title === "Points" && (
+            {section.title === "Poäng" && (
               <View style={tailwind("mt-4")}>
                 {branch.id === "shortPuts" ? <PointsGrid1 /> : <PointsGrid2 />}
               </View>
@@ -58,14 +58,14 @@ function PointsGrid1() {
   return (
     <GridWrapper>
       <GridRow>
-        <GridCell align="start">Putts</GridCell>
+        <GridCell align="start">Puttar</GridCell>
         <GridCell>1</GridCell>
         <GridCell>2</GridCell>
         <GridCell>3</GridCell>
-        <GridCell>Over 3</GridCell>
+        <GridCell>{">3"}</GridCell>
       </GridRow>
       <GridRow>
-        <GridCell align="start">Points</GridCell>
+        <GridCell align="start">Poäng</GridCell>
         <GridCell>1</GridCell>
         <GridCell>0</GridCell>
         <GridCell>-1</GridCell>
@@ -79,8 +79,8 @@ function PointsGrid2() {
   return (
     <GridWrapper>
       <GridRow>
-        <GridCell align="start">Range</GridCell>
-        <GridCell>In hole</GridCell>
+        <GridCell align="start">Avst.</GridCell>
+        <GridCell>I hål</GridCell>
         <GridCell>1m</GridCell>
         <GridCell>1-2m</GridCell>
         <GridCell>2-3m</GridCell>
@@ -88,7 +88,7 @@ function PointsGrid2() {
         <GridCell>{">green"}</GridCell>
       </GridRow>
       <GridRow>
-        <GridCell align="start">Points</GridCell>
+        <GridCell align="start">Poäng</GridCell>
         <GridCell>3</GridCell>
         <GridCell>2</GridCell>
         <GridCell>1</GridCell>

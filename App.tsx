@@ -53,6 +53,7 @@ export function TabViews() {
           tabBarIcon: ({ color }) => {
             return <Ionicons name="ios-person" color={color} size={24} />;
           },
+          tabBarLabel: "Min Profil",
         }}
         component={ProfileView}
         name="Profile"
@@ -63,7 +64,7 @@ export function TabViews() {
           tabBarIcon: ({ color }) => {
             return <Ionicons name="ios-cog" color={color} size={24} />;
           },
-          tabBarLabel: "Settings",
+          tabBarLabel: "Inställningar",
         }}
         component={EditProfileView}
         name="EditProfile"
@@ -97,9 +98,21 @@ export default function App() {
             component={TabViews}
             name="Home"
           />
-          <Stack.Screen component={GuideView} name="Guide" />
-          <Stack.Screen component={GuideBranchView} name="GuideBranch" />
-          <Stack.Screen component={RoundView} name="Round" />
+          <Stack.Screen
+            options={{ headerBackTitle: "Start" }}
+            component={GuideView}
+            name="Guide"
+          />
+          <Stack.Screen
+            options={{ headerBackTitle: "Start" }}
+            component={GuideBranchView}
+            name="GuideBranch"
+          />
+          <Stack.Screen
+            options={{ headerBackTitle: "Start" }}
+            component={RoundView}
+            name="Round"
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>

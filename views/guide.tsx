@@ -8,75 +8,75 @@ import { classNames } from "../lib/utils";
 
 export const GUIDE_DATA = [
   {
-    title: "Short puts",
+    title: "Korta puttar",
     id: "shortPuts",
     sections: [
       {
-        title: "Setup",
-        text: " From a relatively flat hole, place 5 pegs with 1 meter in between each other.",
+        title: "Förberedelse",
+        text: "Från ett relativt plant hål, placera 5 peggar med 1 meter mellan varandra.",
       },
       {
-        title: "Execution",
-        text: "Putt 2 balls from the first peg, and then move backwards until the last peg.\n\nWhen you have putted all balls, move the pegs to the opposite side  and start over.",
+        title: "Utförande",
+        text: "Putta 2 bollar från den första peggen och flytta sedan bakåt tills den sista peggen.\n\nNär du har puttat alla bollar flyttar du peggarna till motsatt sida och kör igen.",
       },
       {
-        title: "Points",
+        title: "Poäng",
       },
     ],
   },
   {
-    title: "Long puts",
+    title: "Långa puttar",
     id: "longPuts",
     sections: [
       {
-        title: "Setup",
-        text: " From a relatively flat hole, place 5 pegs with 5 meters in between each other.",
+        title: "Förberedelse",
+        text: "Från ett relativt plant hål, placera 5 peggar med 1 meter mellan varandra.",
       },
       {
-        title: "Execution",
-        text: "Putt 2 balls from the first peg, and then move backwards until the last peg.",
+        title: "Utförande",
+        text: "Putta 2 bollar från den första peggen och flytta sedan bakåt tills den sista peggen.",
       },
       {
-        title: "Points",
+        title: "Poäng",
       },
     ],
   },
   {
-    title: "Chips",
+    title: "Chippar",
     id: "chips",
     sections: [
       {
-        title: "Execution",
-        text: "Chip 10 balls to a hole from 15 meters away.",
+        title: "Utförande",
+        text: "Chippa 10 bollar till ett hål ifrån 15 meters avstånd.",
       },
       {
-        title: "Points",
+        title: "Poäng",
       },
     ],
   },
   {
-    title: "Pitches",
+    title: "Pitchar",
     id: "pitches",
     sections: [
       {
-        title: "Execution",
-        text: "Hit 10 pitches to a hole from 25 meters away.",
+        title: "Utförande",
+        text: "Slå 10 pitchar till ett hål ifrån 25 meters avstånd.",
       },
       {
-        title: "Points",
+        title: "Poäng",
       },
     ],
   },
   {
-    title: "Bunker shots",
+    title: "Bunkerslag",
     id: "bunkerShots",
     sections: [
       {
-        title: "Execution",
-        text: "Hit 10 bunker shots to a hole from a maximum of 15 meters away.",
+        title: "Utförande",
+        text: "Slå 10 bunkerslag till ett hål ifrån max 15 meters avstånd.",
       },
       {
-        title: "Points",
+        title: "Poäng",
       },
     ],
   },

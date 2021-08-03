@@ -73,10 +73,10 @@ export default function CreateRound({
     >
       <View style={tailwind("p-6 pb-12")}>
         <View style={tailwind("flex-row justify-between items-center")}>
-          <Text style={tailwind("text-2xl font-bold")}>New round</Text>
+          <Text style={tailwind("text-2xl font-bold")}>Ny runda</Text>
 
           <Button onPress={onClose} size="small">
-            Close
+            Stäng
           </Button>
         </View>
 
@@ -84,7 +84,7 @@ export default function CreateRound({
           <Input
             onChangeText={setShortPuts}
             keyboardType="number-pad"
-            label="Short puts"
+            label="Korta puttar"
             placeholder="10"
             value={shortPuts}
           />
@@ -94,7 +94,7 @@ export default function CreateRound({
           <Input
             onChangeText={setLongPuts}
             keyboardType="number-pad"
-            label="Long puts"
+            label="Långa puttar"
             placeholder="18"
             value={longPuts}
           />
@@ -105,7 +105,7 @@ export default function CreateRound({
             keyboardType="number-pad"
             onChangeText={setChip}
             placeholder="16"
-            label="Chips"
+            label="Chippar"
             value={chip}
           />
         </View>
@@ -115,7 +115,7 @@ export default function CreateRound({
             keyboardType="number-pad"
             onChangeText={setPitch}
             placeholder="12"
-            label="Pitches"
+            label="Pitchar"
             value={pitch}
           />
         </View>
@@ -124,7 +124,7 @@ export default function CreateRound({
           <Input
             onChangeText={setBunker}
             keyboardType="number-pad"
-            label="Bunker shots"
+            label="Bunkerslag"
             value={bunker}
             placeholder="5"
           />
@@ -137,7 +137,7 @@ export default function CreateRound({
             loading={loading}
             type="primary"
           >
-            Submit
+            Registrera
           </Button>
         </View>
       </View>

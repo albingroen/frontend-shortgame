@@ -70,7 +70,7 @@ export default function RoundView({
                 },
               });
             }}
-            title="Delete"
+            title="Radera"
           />
         ),
       });
@@ -102,7 +102,7 @@ export default function RoundView({
               <Card>
                 <View style={tailwind("flex-row justify-between")}>
                   <Text style={tailwind("text-lg font-medium")}>
-                    Short puts
+                    Korta puttar
                   </Text>
                   <Text
                     style={tailwind("text-green-500 font-semibold text-lg")}
@@ -116,7 +116,7 @@ export default function RoundView({
                 <Card>
                   <View style={tailwind("flex-row justify-between")}>
                     <Text style={tailwind("text-lg font-medium")}>
-                      Long puts
+                      Långa puttar
                     </Text>
                     <Text
                       style={tailwind("text-green-500 font-semibold text-lg")}
@@ -143,7 +143,7 @@ export default function RoundView({
               <View style={tailwind("mt-4")}>
                 <Card>
                   <View style={tailwind("flex-row justify-between")}>
-                    <Text style={tailwind("text-lg font-medium")}>Pitches</Text>
+                    <Text style={tailwind("text-lg font-medium")}>Pitchar</Text>
                     <Text
                       style={tailwind("text-green-500 font-semibold text-lg")}
                     >
@@ -157,7 +157,7 @@ export default function RoundView({
                 <Card>
                   <View style={tailwind("flex-row justify-between")}>
                     <Text style={tailwind("text-lg font-medium")}>
-                      Bunker shots
+                      Bunkerslag
                     </Text>
                     <Text
                       style={tailwind("text-green-500 font-semibold text-lg")}
@@ -170,10 +170,10 @@ export default function RoundView({
             </>
           ) : isRoundLoading ? (
             <ActivityIndicator size="large" />
+          ) : roundError ? (
+            <Text>Lyckades inte hitta din runda ({roundError.message})</Text>
           ) : (
-            roundError && (
-              <Text>Failed to retrieve round ({roundError.message})</Text>
-            )
+            <Text>Något gick fel</Text>
           )}
         </ScrollView>
       </SafeAreaView>

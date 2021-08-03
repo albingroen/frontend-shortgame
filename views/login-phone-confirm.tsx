@@ -62,7 +62,7 @@ export default function LoginPhoneConfirmView({
               loading={loading}
               icon="&rarr;"
             >
-              Continue
+              Fortsätt
             </Button>
           </View>
         </ScrollView>

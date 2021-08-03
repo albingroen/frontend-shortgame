@@ -114,14 +114,14 @@ export default function EditProfileView() {
         <View style={tailwind("p-4")}>
           {user ? (
             <View>
-              <InputLabel>Avatar</InputLabel>
+              <InputLabel>Profilbild</InputLabel>
               <Card>
                 <View style={tailwind("flex-row items-center")}>
                   <Avatar src={avatar} />
 
                   <View style={tailwind("ml-4")}>
                     <Button onPress={pickImage} size="small">
-                      Change
+                      Ändra bild
                     </Button>
                   </View>
                 </View>
@@ -134,7 +134,7 @@ export default function EditProfileView() {
                   placeholder="John Doe"
                   autoCapitalize="none"
                   value={name}
-                  label="Name"
+                  label="Namn"
                 />
               </View>
 
@@ -156,7 +156,7 @@ export default function EditProfileView() {
                   placeholder="+4172918894"
                   keyboardType="phone-pad"
                   value={phoneNumber}
-                  label="Phone"
+                  label="Mobilnr"
                 />
               </View>
               <View style={tailwind("mt-10")}>
@@ -170,16 +170,16 @@ export default function EditProfileView() {
                     avatar === user.avatar
                   }
                 >
-                  Save
+                  Spara
                 </Button>
               </View>
             </View>
           ) : isUserLoading ? (
             <ActivityIndicator size="large" />
           ) : userError ? (
-            <Text>Failed to retrieve user ({userError.message})</Text>
+            <Text>Lyckades inte hitta din användare ({userError.message})</Text>
           ) : (
-            <Text>User not found</Text>
+            <Text>Något gick fel</Text>
           )}
         </View>
       </KeyboardAwareScrollView>

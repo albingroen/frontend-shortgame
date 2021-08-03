@@ -30,7 +30,7 @@ export default function LoginStartView({ navigation }) {
             }}
             icon="&rarr;"
           >
-            Sign up
+            Registrera / Logga in
           </Button>
         )}
       </View>

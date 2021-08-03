@@ -59,7 +59,7 @@ export default function LoginPhoneView({ navigation }) {
         >
           <View>
             <Text style={tailwind("text-lg font-medium text-gray-500")}>
-              Enter your phone number
+              Ange ditt mobilnummer
             </Text>
             <TextInput
               style={tailwind("text-3xl py-4 mt-1")}
@@ -78,7 +78,7 @@ export default function LoginPhoneView({ navigation }) {
               loading={loading}
               icon="&rarr;"
             >
-              Continue
+              Fortsätt
             </Button>
           </View>
         </ScrollView>

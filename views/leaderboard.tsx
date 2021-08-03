@@ -104,9 +104,9 @@ export default function LeaderboardView() {
           {isLoading ? (
             <ActivityIndicator size="large" />
           ) : error ? (
-            <Text>Failed to retrieve leaderboard ({error.message})</Text>
+            <Text>Lyckades inte hämta leaderboarden ({error.message})</Text>
           ) : (
-            <Text>Leaderboard not found</Text>
+            <Text>Något gick fel</Text>
           )}
         </View>
       )}

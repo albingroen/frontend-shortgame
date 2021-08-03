@@ -19,7 +19,7 @@ export function Confirm({
 }) {
   ActionSheetIOS.showActionSheetWithOptions(
     {
-      options: [labelCancel || "Cancel", labelConfirm],
+      options: [labelCancel || "Avbryt", labelConfirm],
       destructiveButtonIndex: 1,
       cancelButtonIndex: 0,
     },
