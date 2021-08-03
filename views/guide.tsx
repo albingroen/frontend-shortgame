@@ -21,7 +21,6 @@ export const GUIDE_DATA = [
       },
       {
         title: "Points",
-        text: "Every sat ball is 1pt, everything else 0pt.",
       },
     ],
   },
@@ -35,25 +34,51 @@ export const GUIDE_DATA = [
       },
       {
         title: "Execution",
-        text: "Putt 2 balls from the first peg, and then move backwards until the last peg.\n\nWhen you have putted all balls, move the pegs to the opposite side  and start over.",
+        text: "Putt 2 balls from the first peg, and then move backwards until the last peg.",
       },
       {
         title: "Points",
-        text: "Every sat ball is 3pt, and then -1 / meter away from the hole.",
       },
     ],
   },
   {
     title: "Chips",
     id: "chips",
+    sections: [
+      {
+        title: "Execution",
+        text: "Chip 10 balls to a hole from 15 meters away.",
+      },
+      {
+        title: "Points",
+      },
+    ],
   },
   {
     title: "Pitches",
     id: "pitches",
+    sections: [
+      {
+        title: "Execution",
+        text: "Hit 10 pitches to a hole from 25 meters away.",
+      },
+      {
+        title: "Points",
+      },
+    ],
   },
   {
     title: "Bunker shots",
     id: "bunkerShots",
+    sections: [
+      {
+        title: "Execution",
+        text: "Hit 10 bunker shots to a hole from a maximum of 15 meters away.",
+      },
+      {
+        title: "Points",
+      },
+    ],
   },
 ];
 
