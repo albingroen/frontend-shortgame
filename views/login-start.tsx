@@ -1,21 +1,32 @@
 import Button from "../components/button";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
 import { StatusBar } from "expo-status-bar";
 import { View, SafeAreaView, ActivityIndicator } from "react-native";
 import { getUser } from "../lib/user";
 import { useIsFocused } from "@react-navigation/native";
 import { useQuery } from "react-query";
+import * as SecureStore from "expo-secure-store";
 
 export default function LoginStartView({ navigation }) {
   const { data, isLoading, error } = useQuery("user", getUser);
   const isFocused = useIsFocused();
+
+  const [phoneNumber, setPhoneNumber] = useState<string>();
 
   useEffect(() => {
     if (data && !isLoading && !error && isFocused) {
       navigation.navigate("Home");
     }
   }, [data, isLoading, error]);
+
+  useEffect(() => {
+    SecureStore.getItemAsync("phoneNumber").then((value) => {
+      if (value) {
+        setPhoneNumber(value);
+      }
+    });
+  }, []);
 
   return (
     <SafeAreaView>
@@ -26,7 +37,7 @@ export default function LoginStartView({ navigation }) {
         ) : (
           <Button
             onPress={() => {
-              navigation.navigate("LoginPhone");
+              navigation.navigate("LoginPhone", { phoneNumber });
             }}
             icon="&rarr;"
           >

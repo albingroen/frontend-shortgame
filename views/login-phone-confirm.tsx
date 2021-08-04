@@ -17,7 +17,7 @@ import * as SecureStore from "expo-secure-store";
 export default function LoginPhoneConfirmView({
   navigation,
   route: {
-    params: { phoneNumber, code: initialCode },
+    params: { phoneNumber, handicap, code: initialCode },
   },
 }) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,6 +29,7 @@ export default function LoginPhoneConfirmView({
     axios
       .post(`${apiUrl}/auth/confirm`, {
         phoneNumber,
+        handicap,
         code,
       })
       .then((res) => {

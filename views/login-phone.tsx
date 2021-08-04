@@ -12,12 +12,21 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Alert,
+  Switch,
 } from "react-native";
 import { apiUrl } from "../lib/config";
+import Input, { InputLabel } from "../components/input";
+import FadeIn from "../components/fade-in";
 
-export default function LoginPhoneView({ navigation }) {
+export default function LoginPhoneView({
+  navigation,
+  route: {
+    params: { phoneNumber: initialPhoneNumber },
+  },
+}) {
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [handicap, setHandicap] = useState<string>();
 
   const onLogin = async () => {
     if (!phoneNumber) return;
@@ -37,7 +46,10 @@ export default function LoginPhoneView({ navigation }) {
             phoneNumber,
           });
         } else {
-          navigation.navigate("LoginPhoneConfirm", { phoneNumber });
+          navigation.navigate("LoginPhoneConfirm", {
+            phoneNumber,
+            handicap: Number(handicap),
+          });
           setLoading(false);
         }
       })
@@ -48,12 +60,12 @@ export default function LoginPhoneView({ navigation }) {
   };
 
   useEffect(() => {
-    SecureStore.getItemAsync("phoneNumber").then((value) => {
-      if (value) {
-        setPhoneNumber(value);
-      }
-    });
-  }, []);
+    if (initialPhoneNumber) {
+      setPhoneNumber(initialPhoneNumber);
+    }
+  }, [initialPhoneNumber]);
+
+  const isFirstTime = !initialPhoneNumber && SecureStore;
 
   return (
     <KeyboardAvoidingView behavior="padding">
@@ -76,7 +88,43 @@ export default function LoginPhoneView({ navigation }) {
               value={phoneNumber || ""}
             />
           </View>
-          <View style={tailwind("mt-4")}>
+
+          {isFirstTime && (
+            <>
+              <View style={tailwind("mt-2 flex-row")}>
+                <InputLabel>Jag har ett närspelshandicap</InputLabel>
+                <Switch
+                  onValueChange={(value) => setHandicap(value ? "" : undefined)}
+                  value={typeof handicap === "string"}
+                  style={tailwind("ml-4")}
+                />
+              </View>
+
+              {typeof handicap === "string" && (
+                <FadeIn>
+                  <View style={tailwind("mt-4")}>
+                    <Input
+                      onChangeText={setHandicap}
+                      keyboardType="numbers-and-punctuation"
+                      label="Ange handicap"
+                      value={handicap}
+                      placeholder="36"
+                    />
+                  </View>
+                </FadeIn>
+              )}
+            </>
+          )}
+
+          <View
+            style={tailwind(
+              isFirstTime
+                ? typeof handicap === "string"
+                  ? "mt-8"
+                  : "mt-6"
+                : "mt-4"
+            )}
+          >
             <Button
               onPress={async () => {
                 onLogin();
