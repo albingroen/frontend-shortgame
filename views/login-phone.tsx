@@ -30,9 +30,16 @@ export default function LoginPhoneView({ navigation }) {
       .post(`${apiUrl}/auth/login`, {
         phoneNumber,
       })
-      .then(() => {
-        navigation.navigate("LoginPhoneConfirm", { phoneNumber });
-        setLoading(false);
+      .then((res) => {
+        if (res.data.confirmation) {
+          navigation.navigate("LoginPhoneConfirm", {
+            code: res.data.confirmation.code,
+            phoneNumber,
+          });
+        } else {
+          navigation.navigate("LoginPhoneConfirm", { phoneNumber });
+          setLoading(false);
+        }
       })
       .catch((err) => {
         Alert.alert(err.message);

@@ -17,11 +17,11 @@ import * as SecureStore from "expo-secure-store";
 export default function LoginPhoneConfirmView({
   navigation,
   route: {
-    params: { phoneNumber },
+    params: { phoneNumber, code: initialCode },
   },
 }) {
   const [loading, setLoading] = useState<boolean>(false);
-  const [code, setCode] = useState<string>("");
+  const [code, setCode] = useState<string>(initialCode);
 
   const onConfirm = async () => {
     setLoading(true);
@@ -51,14 +51,14 @@ export default function LoginPhoneConfirmView({
           keyboardShouldPersistTaps="handled"
           scrollEnabled={false}
         >
-          <PinInput onChange={setCode} />
+          <PinInput initialCode={initialCode} onChange={setCode} />
 
           <View style={tailwind("mt-8")}>
             <Button
               onPress={() => {
                 onConfirm();
               }}
-              disabled={code.length !== 4}
+              disabled={code?.length !== 4}
               loading={loading}
               icon="&rarr;"
             >

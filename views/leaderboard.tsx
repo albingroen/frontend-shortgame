@@ -4,7 +4,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useCallback, useState } from "react";
 import Screen from "../components/screen";
 import tailwind from "tailwind-rn";
-import { FlatList, RefreshControl, Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 import { classNames, wait } from "../lib/utils";
 import { getLeaderboard, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";

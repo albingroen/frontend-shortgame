@@ -6,9 +6,10 @@ import { range } from "lodash";
 
 interface IPinInputProps {
   onChange: (value: string) => void;
+  initialCode?: string;
 }
 
-export default function PinInput({ onChange }: IPinInputProps) {
+export default function PinInput({ initialCode, onChange }: IPinInputProps) {
   const [i0Value, setI0Value] = useState<string>("");
   const [i1Value, setI1Value] = useState<string>("");
   const [i2Value, setI2Value] = useState<string>("");
@@ -28,6 +29,13 @@ export default function PinInput({ onChange }: IPinInputProps) {
   useEffect(() => {
     onChange(code);
   }, [code]);
+
+  useEffect(() => {
+    initialCode?.split("").forEach((n, i) => {
+      const setFn = setValueFns[i];
+      setFn(n);
+    });
+  }, [initialCode]);
 
   return (
     <View
