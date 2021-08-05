@@ -1,9 +1,11 @@
+import * as SecureStore from "expo-secure-store";
 import Button from "../components/button";
+import FadeIn from "../components/fade-in";
+import Input, { InputLabel } from "../components/input";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import tailwind from "tailwind-rn";
 import { StatusBar } from "expo-status-bar";
-import * as SecureStore from "expo-secure-store";
 import {
   View,
   SafeAreaView,
@@ -15,8 +17,7 @@ import {
   Switch,
 } from "react-native";
 import { apiUrl } from "../lib/config";
-import Input, { InputLabel } from "../components/input";
-import FadeIn from "../components/fade-in";
+import { normalizePhoneNumber } from "../lib/utils";
 
 export default function LoginPhoneView({
   navigation,
@@ -33,28 +34,35 @@ export default function LoginPhoneView({
 
     setLoading(true);
 
-    await SecureStore.setItemAsync("phoneNumber", phoneNumber);
+    const normalizedPhoneNumber = normalizePhoneNumber(phoneNumber);
+
+    if (!normalizedPhoneNumber) {
+      setLoading(false);
+      return Alert.alert("Det mobilnummer du angav är inte giltigt");
+    }
+
+    await SecureStore.setItemAsync("phoneNumber", normalizedPhoneNumber);
 
     axios
       .post(`${apiUrl}/auth/login`, {
-        phoneNumber,
+        phoneNumber: normalizedPhoneNumber,
       })
       .then((res) => {
         if (res.data.confirmation) {
           navigation.navigate("LoginPhoneConfirm", {
             code: res.data.confirmation.code,
-            phoneNumber,
+            phoneNumber: normalizedPhoneNumber,
           });
         } else {
           navigation.navigate("LoginPhoneConfirm", {
-            phoneNumber,
+            phoneNumber: normalizedPhoneNumber,
             handicap: Number(handicap),
           });
           setLoading(false);
         }
       })
       .catch((err) => {
-        Alert.alert(err.message);
+        Alert.alert(err.response?.data?.message || err.message);
         setLoading(false);
       });
   };

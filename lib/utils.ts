@@ -1,4 +1,5 @@
 import { ActionSheetIOS } from "react-native";
+import PhoneNumber from "awesome-phonenumber";
 
 export function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,4 +30,13 @@ export function Confirm({
       }
     }
   );
+}
+
+export function normalizePhoneNumber(phoneNumber: string) {
+  const pn = new PhoneNumber(phoneNumber, "SE");
+
+  if (pn.isValid()) {
+    return pn.getNumber();
+  }
+  return;
 }
