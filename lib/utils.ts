@@ -39,7 +39,7 @@ export function Confirm({
 export function normalizePhoneNumber(phoneNumber: string) {
   const pn = new PhoneNumber(phoneNumber, "SE");
 
-  if (pn.isValid()) {
+  if (pn.isPossible()) {
     return pn.getNumber();
   }
   return;
