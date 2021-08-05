@@ -99,12 +99,7 @@ export default function StartView({ navigation }) {
                             "text-gray-500 font-semibold text-2xl"
                           )}
                         >
-                          {round.total}
-                        </Text>
-                        <Text
-                          style={tailwind("text-gray-500 font-bold text-2xl")}
-                        >
-                          /64
+                          {round.total}pt
                         </Text>
                       </View>
 

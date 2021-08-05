@@ -99,7 +99,7 @@ export default function EditProfileView() {
         <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
       }
       loading={isUserLoading}
-      title="Settings"
+      title="Inställningar"
       scroll
     >
       {user ? (
