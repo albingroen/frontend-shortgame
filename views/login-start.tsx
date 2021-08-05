@@ -1,6 +1,7 @@
 import Button from "../components/button";
 import React, { useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
+import IonIcons from "react-native-vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { View, SafeAreaView, ActivityIndicator } from "react-native";
 import { getUser } from "../lib/user";

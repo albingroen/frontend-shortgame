@@ -1,8 +1,15 @@
 import React, { ReactNode } from "react";
 import tailwind from "tailwind-rn";
-import { ActivityIndicator, SafeAreaView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Platform,
+  SafeAreaView,
+  Text,
+  View,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StatusBar } from "expo-status-bar";
+import { classNames } from "../lib/utils";
 
 interface IScreenProps {
   refreshControl?: any;
@@ -40,7 +47,13 @@ export default function Screen({
         keyboardOpeningTime={0}
         scrollEnabled={scroll}
       >
-        <View style={tailwind(title || subTitle ? "my-6" : "mt-6")}>
+        <View
+          style={tailwind(
+            title || subTitle
+              ? classNames("my-6", Platform.OS === "android" && "mt-12")
+              : `mt-${Platform.OS === "android" ? 12 : 6}`
+          )}
+        >
           {title && <Text style={tailwind("text-4xl font-bold")}>{title}</Text>}
 
           {subTitle && (

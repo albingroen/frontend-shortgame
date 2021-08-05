@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, TextInput, TextInputProps } from "react-native";
+import { View, Text, TextInput, TextInputProps, Platform } from "react-native";
 import tailwind from "tailwind-rn";
+import { androidShadow, iosShadow } from "../lib/utils";
 
 interface IInputProps extends TextInputProps {
   label?: string;
@@ -17,14 +18,7 @@ export default function Input({ label, ...rest }: IInputProps) {
           paddingBottom: 0,
           ...tailwind("rounded-lg p-4 bg-white"),
           fontSize: 20,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 5,
-          },
-          shadowOpacity: 0.025,
-          shadowRadius: 3,
-          elevation: 5,
+          ...(Platform.OS === "android" ? androidShadow : iosShadow),
         }}
         {...rest}
       />

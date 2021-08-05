@@ -1,4 +1,4 @@
-import { ActionSheetIOS } from "react-native";
+import { ActionSheetIOS, Platform } from "react-native";
 import PhoneNumber from "awesome-phonenumber";
 
 export function classNames(...classes) {
@@ -18,18 +18,22 @@ export function Confirm({
   labelConfirm: string;
   onConfirm: () => void;
 }) {
-  ActionSheetIOS.showActionSheetWithOptions(
-    {
-      options: [labelCancel || "Avbryt", labelConfirm],
-      destructiveButtonIndex: 1,
-      cancelButtonIndex: 0,
-    },
-    (buttonIndex) => {
-      if (buttonIndex === 1) {
-        onConfirm();
+  if (Platform.OS === "ios") {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: [labelCancel || "Avbryt", labelConfirm],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 1) {
+          onConfirm();
+        }
       }
-    }
-  );
+    );
+  } else {
+    onConfirm();
+  }
 }
 
 export function normalizePhoneNumber(phoneNumber: string) {
@@ -40,3 +44,18 @@ export function normalizePhoneNumber(phoneNumber: string) {
   }
   return;
 }
+
+export const iosShadow = {
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 5,
+  },
+  shadowOpacity: 0.025,
+  shadowRadius: 3,
+  elevation: 5,
+};
+
+export const androidShadow = {
+  elevation: 1,
+};

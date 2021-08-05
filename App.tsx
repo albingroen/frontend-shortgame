@@ -1,19 +1,21 @@
-import Ionicons from "react-native-vector-icons/Ionicons";
 import EditProfileView from "./views/edit-profile";
-import LoginPhoneConfirmView from "./views/login-phone-confirm";
+import GuideBranchView from "./views/guide-branch";
+import GuideView from "./views/guide";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import LeaderboardView from "./views/leaderboard";
+import LoginPhoneConfirmView from "./views/login-phone-confirm";
 import LoginPhoneView from "./views/login-phone";
 import LoginStartView from "./views/login-start";
 import ProfileView from "./views/profile";
 import React from "react";
 import RoundView from "./views/round";
 import StartView from "./views/start";
-import GuideView from "./views/guide";
+import tailwind from "tailwind-rn";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { createStackNavigator } from "@react-navigation/stack";
+import { LogBox } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import GuideBranchView from "./views/guide-branch";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -74,6 +76,8 @@ export function TabViews() {
 }
 
 export default function App() {
+  LogBox.ignoreLogs(["Setting a timer"]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
@@ -109,7 +113,10 @@ export default function App() {
             name="GuideBranch"
           />
           <Stack.Screen
-            options={{ headerBackTitle: "Start" }}
+            options={{
+              headerRightContainerStyle: tailwind("pr-4"),
+              headerBackTitle: "Start",
+            }}
             component={RoundView}
             name="Round"
           />

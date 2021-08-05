@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Pressable,
   PressableProps,
+  Platform,
   Text,
   View,
 } from "react-native";
@@ -79,7 +80,7 @@ export default function Button({
           >
             {children}
           </Text>
-          {icon ? (
+          {icon && Platform.OS === "ios" ? (
             <View style={tailwind("ml-2")}>
               {typeof icon === "string" ? (
                 <Text
