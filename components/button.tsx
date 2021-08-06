@@ -62,7 +62,7 @@ export default function Button({
       {loading ? (
         <>
           <View />
-          <ActivityIndicator style={tailwind("my-1")} />
+          <ActivityIndicator color={color} style={tailwind("my-1")} />
           <View />
         </>
       ) : (
