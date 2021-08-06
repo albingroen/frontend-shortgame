@@ -19,6 +19,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useQuery, useQueryClient } from "react-query";
 import { Confirm, wait } from "../lib/utils";
 import { InputLabel } from "../components/input";
+import { getUser } from "../lib/user";
 
 export default function RoundView({
   navigation,
@@ -31,6 +32,8 @@ export default function RoundView({
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   // Server state
+  const { data: user } = useQuery("user", getUser);
+
   const {
     isLoading: isRoundLoading,
     refetch: refetchRound,
@@ -47,7 +50,7 @@ export default function RoundView({
   useFocusEffect(useCallback(onRefresh, []));
 
   useEffect(() => {
-    if (round?.createdAt) {
+    if (round?.createdAt && round?.userId === user?.id) {
       navigation.setOptions({
         title: moment(round.createdAt).format("YYYY-MM-DD HH:mm"),
         headerRight: () => (
@@ -76,7 +79,7 @@ export default function RoundView({
         ),
       });
     }
-  }, [round?.createdAt]);
+  }, [round?.createdAt, user]);
 
   const handleRefresh = React.useCallback(() => {
     setRefreshing(true);

@@ -14,6 +14,16 @@ export const getUser = async () => {
     .catch(() => {});
 };
 
+export const getPublicUser = async (id: string) => {
+  const token = await SecureStore.getItemAsync("x-token");
+  return axios
+    .get(`${apiUrl}/user/public/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => res.data)
+    .catch(() => {});
+};
+
 export const updateUser = async (values: any) => {
   const token = await SecureStore.getItemAsync("x-token");
   return axios

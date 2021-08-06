@@ -7,6 +7,7 @@ import LoginPhoneConfirmView from "./views/login-phone-confirm";
 import LoginPhoneView from "./views/login-phone";
 import LoginStartView from "./views/login-start";
 import ProfileView from "./views/profile";
+import PublicProfileView from "./views/public-profile";
 import React from "react";
 import RoundView from "./views/round";
 import StartView from "./views/start";
@@ -119,6 +120,13 @@ export default function App() {
             }}
             component={RoundView}
             name="Round"
+          />
+          <Stack.Screen
+            component={PublicProfileView}
+            options={{
+              headerBackTitle: "Tillbaka",
+            }}
+            name="PublicProfile"
           />
         </Stack.Navigator>
       </NavigationContainer>

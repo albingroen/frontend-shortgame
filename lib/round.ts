@@ -28,6 +28,5 @@ export const deleteRound = async (id: string) => {
     .delete(`${apiUrl}/round/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then((res) => res.data)
-    .catch(() => {});
+    .then((res) => res.data);
 };
