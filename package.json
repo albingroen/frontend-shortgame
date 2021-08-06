@@ -33,6 +33,7 @@
     "react-native-screens": "~3.4.0",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
+    "react-navigation": "^4.4.4",
     "react-query": "^3.19.1",
     "tailwind-rn": "^3.0.1"
   },

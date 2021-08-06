@@ -18,6 +18,7 @@ import { deleteRound, getRound } from "../lib/round";
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery, useQueryClient } from "react-query";
 import { Confirm, wait } from "../lib/utils";
+import { InputLabel } from "../components/input";
 
 export default function RoundView({
   navigation,
@@ -166,6 +167,16 @@ export default function RoundView({
                     </Text>
                   </View>
                 </Card>
+              </View>
+
+              <View style={tailwind("mt-6 flex-row justify-between")}>
+                <View />
+                <View style={tailwind("items-end")}>
+                  <InputLabel>Totalt</InputLabel>
+                  <Text style={tailwind("text-3xl font-semibold")}>
+                    {round.total}pt
+                  </Text>
+                </View>
               </View>
             </>
           ) : isRoundLoading ? (
