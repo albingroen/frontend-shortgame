@@ -4,6 +4,7 @@ import GuideView from "./views/guide";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import LeaderboardView from "./views/leaderboard";
 import LoginPhoneConfirmView from "./views/login-phone-confirm";
+import CreateRoundView from "./views/create-round";
 import LoginPhoneView from "./views/login-phone";
 import LoginStartView from "./views/login-start";
 import ProfileView from "./views/profile";
@@ -116,6 +117,11 @@ export default function App() {
             name="Round"
           />
           <Stack.Screen component={ProfileView} name="PublicProfile" />
+          <Stack.Screen
+            options={{ headerTitle: "Ny runda" }}
+            component={CreateRoundView}
+            name="CreateRound"
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>

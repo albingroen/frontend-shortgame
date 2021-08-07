@@ -43,6 +43,7 @@ export default function Screen({
 
       <KeyboardAwareScrollView
         contentContainerStyle={tailwind("min-h-full p-4 pb-20")}
+        keyboardShouldPersistTaps="handled"
         refreshControl={refreshControl}
         keyboardOpeningTime={0}
         scrollEnabled={scroll}

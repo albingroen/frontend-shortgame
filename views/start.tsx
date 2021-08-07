@@ -1,15 +1,12 @@
 import Button from "../components/button";
-import CreateRound from "../components/create-round";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useCallback, useState } from "react";
 import Screen from "../components/screen";
 import moment from "moment";
 import tailwind from "tailwind-rn";
-import { Modal, RefreshControl, Text, View } from "react-native";
-import { getRounds } from "../lib/round";
+import { RefreshControl, Text, View } from "react-native";
 import { logout, useUser } from "../lib/user";
 import { useFocusEffect } from "@react-navigation/native";
-import { useQuery } from "react-query";
 import { wait } from "../lib/utils";
 
 moment.locale("sv-SE");
@@ -23,28 +20,18 @@ export default function StartView({ navigation }) {
     data: user,
   } = useUser();
 
-  const {
-    isLoading: isRoundsLoading,
-    refetch: refetchRounds,
-    error: roundsError,
-    data: rounds,
-  } = useQuery("rounds", getRounds);
-
   const onRefresh = () => {
-    refetchRounds();
     refetchUser();
   };
 
   useFocusEffect(useCallback(onRefresh, []));
 
   // Client state
-  const [isCreateRoundOpen, setIsCreateRoundOpen] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const handleRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(1000).then(async () => {
-      await refetchRounds();
       await refetchUser();
       setRefreshing(false);
     });
@@ -64,7 +51,9 @@ export default function StartView({ navigation }) {
         <>
           <View>
             <Button
-              onPress={() => setIsCreateRoundOpen(true)}
+              onPress={() => {
+                navigation.navigate("CreateRound");
+              }}
               type="primary"
               icon="&rarr;"
             >
@@ -113,17 +102,6 @@ export default function StartView({ navigation }) {
               </View>
             </View>
           </View>
-
-          <Modal
-            presentationStyle="pageSheet"
-            visible={isCreateRoundOpen}
-            animationType="slide"
-          >
-            <CreateRound
-              onClose={() => setIsCreateRoundOpen(false)}
-              navigation={navigation}
-            />
-          </Modal>
         </>
       ) : userError ? (
         <Text>Lyckades inte hitta din användare ({userError.message})</Text>
