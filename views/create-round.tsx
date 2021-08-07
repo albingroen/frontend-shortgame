@@ -53,6 +53,11 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
       )
       .then(async (res) => {
         await queryClient.invalidateQueries("rounds");
+        setShortPuts(undefined);
+        setLongPuts(undefined);
+        setBunker(undefined);
+        setPitch(undefined);
+        setChip(undefined);
         setLoading(false);
         navigation.push("Round", { id: res.data.id });
       })
