@@ -50,33 +50,38 @@ export default function RoundView({
   useFocusEffect(useCallback(onRefresh, []));
 
   useEffect(() => {
-    if (round?.createdAt && round?.userId === user?.id) {
+    if (round?.createdAt) {
       navigation.setOptions({
         title: moment(round.createdAt).format("YYYY-MM-DD HH:mm"),
-        headerRight: () => (
-          <Button
-            color="red"
-            onPress={() => {
-              Confirm({
-                labelConfirm: "Delete",
-                onConfirm: () => {
-                  setIsDeleteLoading(true);
-                  deleteRound(round.id)
-                    .then(async () => {
-                      await queryClient.invalidateQueries("rounds");
-                      navigation.navigate("Home");
-                      setIsDeleteLoading(false);
-                    })
-                    .catch((err) => {
-                      setIsDeleteLoading(false);
-                      Alert.alert(err.response?.data?.message || err.message);
+        headerRight:
+          round?.userId === user?.id
+            ? () => (
+                <Button
+                  color="red"
+                  onPress={() => {
+                    Confirm({
+                      labelConfirm: "Delete",
+                      onConfirm: () => {
+                        setIsDeleteLoading(true);
+                        deleteRound(round.id)
+                          .then(async () => {
+                            await queryClient.invalidateQueries("rounds");
+                            navigation.navigate("Home");
+                            setIsDeleteLoading(false);
+                          })
+                          .catch((err) => {
+                            setIsDeleteLoading(false);
+                            Alert.alert(
+                              err.response?.data?.message || err.message
+                            );
+                          });
+                      },
                     });
-                },
-              });
-            }}
-            title="Radera"
-          />
-        ),
+                  }}
+                  title="Radera"
+                />
+              )
+            : undefined,
       });
     }
   }, [round?.createdAt, user]);

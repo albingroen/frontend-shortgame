@@ -74,7 +74,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
         Guide
       </Button>
 
-      <View style={tailwind("mt-8")}>
+      <View style={tailwind("mt-6")}>
         <Input
           onChangeText={setShortPuts}
           keyboardType="number-pad"
@@ -84,7 +84,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
         />
       </View>
 
-      <View style={tailwind("mt-8")}>
+      <View style={tailwind("mt-6")}>
         <Input
           onChangeText={setLongPuts}
           keyboardType="number-pad"
@@ -94,7 +94,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
         />
       </View>
 
-      <View style={tailwind("mt-8")}>
+      <View style={tailwind("mt-6")}>
         <Input
           keyboardType="number-pad"
           onChangeText={setChip}
@@ -104,7 +104,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
         />
       </View>
 
-      <View style={tailwind("mt-8")}>
+      <View style={tailwind("mt-6")}>
         <Input
           keyboardType="number-pad"
           onChangeText={setPitch}
@@ -114,7 +114,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
         />
       </View>
 
-      <View style={tailwind("mt-8")}>
+      <View style={tailwind("mt-6")}>
         <Input
           onChangeText={setBunker}
           keyboardType="number-pad"
@@ -124,7 +124,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
         />
       </View>
 
-      <View style={tailwind("mt-8")}>
+      <View style={tailwind("mt-6")}>
         <Button
           disabled={!shortPuts || !longPuts || !chip || !pitch || !bunker}
           onPress={onSubmit}

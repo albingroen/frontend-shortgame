@@ -59,3 +59,30 @@ export const iosShadow = {
 export const androidShadow = {
   elevation: 1,
 };
+
+export const SORT_VARIABLES = [
+  {
+    title: "Handicap",
+    id: "handicap",
+  },
+  {
+    title: "Korta puttar",
+    id: "shortPuts",
+  },
+  {
+    title: "Långa puttar",
+    id: "longPuts",
+  },
+  {
+    title: "Chippar",
+    id: "chip",
+  },
+  {
+    title: "Pitchar",
+    id: "pitch",
+  },
+  {
+    title: "Bunkerslag",
+    id: "bunker",
+  },
+];

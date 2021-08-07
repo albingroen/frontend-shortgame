@@ -111,7 +111,7 @@ export default function App() {
           <Stack.Screen component={GuideBranchView} name="GuideBranch" />
           <Stack.Screen
             options={{
-              headerRightContainerStyle: tailwind("pr-4"),
+              headerRightContainerStyle: tailwind("pr-2.5"),
             }}
             component={RoundView}
             name="Round"
