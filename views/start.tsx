@@ -2,7 +2,6 @@ import Button from "../components/button";
 import CreateRound from "../components/create-round";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useCallback, useState } from "react";
-import Rounds from "../components/rounds";
 import Screen from "../components/screen";
 import moment from "moment";
 import tailwind from "tailwind-rn";
@@ -72,14 +71,28 @@ export default function StartView({ navigation }) {
               Ny runda
             </Button>
 
-            <Rounds
-              loading={isRoundsLoading}
-              navigation={navigation}
-              error={roundsError}
-              rounds={rounds}
-            />
+            <View style={tailwind("mt-8")}>
+              <Text
+                style={tailwind(
+                  "text-base font-semibold tracking-wide text-gray-500 mb-1.5 uppercase"
+                )}
+              >
+                Mina rundor
+              </Text>
+              <View style={tailwind("mt-2")}>
+                <Button
+                  onPress={() => {
+                    navigation.navigate("Profile");
+                  }}
+                  icon={<Ionicons name="ios-person" size={16} color="#888" />}
+                  size="small"
+                >
+                  Min profil
+                </Button>
+              </View>
+            </View>
 
-            <View>
+            <View style={tailwind("mt-8")}>
               <Text
                 style={tailwind(
                   "text-base font-semibold tracking-wide text-gray-500 mb-1.5 uppercase"

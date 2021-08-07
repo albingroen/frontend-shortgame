@@ -7,7 +7,6 @@ import LoginPhoneConfirmView from "./views/login-phone-confirm";
 import LoginPhoneView from "./views/login-phone";
 import LoginStartView from "./views/login-start";
 import ProfileView from "./views/profile";
-import PublicProfileView from "./views/public-profile";
 import React from "react";
 import RoundView from "./views/round";
 import StartView from "./views/start";
@@ -82,7 +81,11 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerBackTitle: "Tillbaka",
+          }}
+        >
           <Stack.Screen
             options={{ headerShown: false }}
             component={LoginStartView}
@@ -103,31 +106,16 @@ export default function App() {
             component={TabViews}
             name="Home"
           />
-          <Stack.Screen
-            options={{ headerBackTitle: "Start" }}
-            component={GuideView}
-            name="Guide"
-          />
-          <Stack.Screen
-            options={{ headerBackTitle: "Start" }}
-            component={GuideBranchView}
-            name="GuideBranch"
-          />
+          <Stack.Screen component={GuideView} name="Guide" />
+          <Stack.Screen component={GuideBranchView} name="GuideBranch" />
           <Stack.Screen
             options={{
               headerRightContainerStyle: tailwind("pr-4"),
-              headerBackTitle: "Start",
             }}
             component={RoundView}
             name="Round"
           />
-          <Stack.Screen
-            component={PublicProfileView}
-            options={{
-              headerBackTitle: "Tillbaka",
-            }}
-            name="PublicProfile"
-          />
+          <Stack.Screen component={ProfileView} name="PublicProfile" />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>
