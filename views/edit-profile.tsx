@@ -7,12 +7,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../components/screen";
 import tailwind from "tailwind-rn";
 import { View, Text, Alert, RefreshControl } from "react-native";
-import { updateUser, useUser } from "../lib/user";
+import { logout, updateUser, useUser } from "../lib/user";
 import { uploadImage } from "../lib/image";
 import { useFocusEffect } from "@react-navigation/native";
 import { wait } from "../lib/utils";
 
-export default function EditProfileView() {
+export default function EditProfileView({ navigation }) {
   // Server state
   const {
     isLoading: isUserLoading,
@@ -161,6 +161,17 @@ export default function EditProfileView() {
               }
             >
               Spara
+            </Button>
+          </View>
+
+          <View style={tailwind("mt-6")}>
+            <Button
+              onPress={() => {
+                logout(navigation);
+              }}
+              type="danger"
+            >
+              Logga ut
             </Button>
           </View>
         </View>

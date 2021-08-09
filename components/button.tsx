@@ -12,7 +12,7 @@ import {
 import { classNames } from "../lib/utils";
 
 interface IButtonProps extends PressableProps {
-  type?: "default" | "primary";
+  type?: "default" | "primary" | "danger";
   size?: "default" | "small";
   loading?: boolean;
   icon?: ReactNode;
@@ -29,7 +29,8 @@ export default function Button({
   icon,
   ...rest
 }: IButtonProps) {
-  const color = type === "default" ? "gray" : "green";
+  const color =
+    type === "default" ? "gray" : type === "danger" ? "red" : "green";
 
   return (
     <Pressable

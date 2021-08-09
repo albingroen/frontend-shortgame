@@ -122,6 +122,7 @@ export default function StartView({ navigation }) {
               onPress={() => {
                 logout(navigation);
               }}
+              type="danger"
             >
               Logga ut
             </Button>
