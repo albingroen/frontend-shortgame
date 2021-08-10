@@ -30,7 +30,7 @@ export const GUIDE_DATA = [
     sections: [
       {
         title: "Förberedelse",
-        text: "Från ett relativt plant hål, placera 5 peggar med 1 meter mellan varandra.",
+        text: "Från ett relativt plant hål, placera 5 peggar med 5 meter mellan varandra.",
       },
       {
         title: "Utförande",
