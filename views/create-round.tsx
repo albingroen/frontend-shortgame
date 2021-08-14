@@ -39,6 +39,20 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
       chip: Number(chip),
     };
 
+    let invalidInput: boolean = false;
+
+    Object.values(values).forEach((value) => {
+      if (Number.isNaN(value)) {
+        invalidInput = true;
+      }
+    });
+
+    if (invalidInput) {
+      return Alert.alert(
+        "Någon av de värden som angav är inte en giltig siffra"
+      );
+    }
+
     const total = Object.values(values).reduce((a, b) => a + b, 0);
 
     await axios
@@ -81,8 +95,8 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
 
       <View style={tailwind("mt-6")}>
         <Input
+          keyboardType="numbers-and-punctuation"
           onChangeText={setShortPuts}
-          keyboardType="number-pad"
           label="Korta puttar"
           placeholder="10"
           value={shortPuts}
@@ -91,8 +105,8 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
 
       <View style={tailwind("mt-6")}>
         <Input
+          keyboardType="numbers-and-punctuation"
           onChangeText={setLongPuts}
-          keyboardType="number-pad"
           label="Långa puttar"
           placeholder="18"
           value={longPuts}
@@ -101,7 +115,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
 
       <View style={tailwind("mt-6")}>
         <Input
-          keyboardType="number-pad"
+          keyboardType="numbers-and-punctuation"
           onChangeText={setChip}
           placeholder="16"
           label="Chippar"
@@ -111,7 +125,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
 
       <View style={tailwind("mt-6")}>
         <Input
-          keyboardType="number-pad"
+          keyboardType="numbers-and-punctuation"
           onChangeText={setPitch}
           placeholder="12"
           label="Pitchar"
@@ -121,8 +135,8 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
 
       <View style={tailwind("mt-6")}>
         <Input
+          keyboardType="numbers-and-punctuation"
           onChangeText={setBunker}
-          keyboardType="number-pad"
           label="Bunkerslag"
           value={bunker}
           placeholder="5"
