@@ -42,7 +42,7 @@ export default function StartView({ navigation }) {
       refreshControl={
         <RefreshControl onRefresh={handleRefresh} refreshing={refreshing} />
       }
-      subTitle=" Här kan du se tidigare rundor, registrera en ny, eller läsa hur det fungerar."
+     subTitle="Här kan du se tidigare rundor, registrera en ny, eller läsa hur det fungerar."
       loading={isUserLoading}
       title="Välkommen"
       scroll
