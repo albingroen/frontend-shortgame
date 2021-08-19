@@ -1,13 +1,12 @@
 import Button from "../components/button";
 import React, { useEffect, useState } from "react";
 import tailwind from "tailwind-rn";
-import IonIcons from "react-native-vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { View, SafeAreaView, ActivityIndicator } from "react-native";
 import { getUser } from "../lib/user";
 import { useIsFocused } from "@react-navigation/native";
 import { useQuery } from "react-query";
-import * as SecureStore from "expo-secure-store";
+import { getSecureValue } from "../lib/utils";
 
 export default function LoginStartView({ navigation }) {
   const { data, isLoading, error } = useQuery("user", getUser);
@@ -22,7 +21,7 @@ export default function LoginStartView({ navigation }) {
   }, [data, isLoading, error]);
 
   useEffect(() => {
-    SecureStore.getItemAsync("phoneNumber").then((value) => {
+    getSecureValue("phoneNumber").then((value) => {
       if (value) {
         setPhoneNumber(value);
       }

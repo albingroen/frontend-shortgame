@@ -1,11 +1,11 @@
-import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { IUser } from "../types";
 import { UseQueryResult, useQuery } from "react-query";
 import { apiUrl } from "./config";
+import { deleteSecureValue, getSecureValue } from "./utils";
 
 export const getUser = async () => {
-  const token = await SecureStore.getItemAsync("x-token");
+  const token = await getSecureValue("x-token");
   return axios
     .get(`${apiUrl}/user`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -15,7 +15,7 @@ export const getUser = async () => {
 };
 
 export const getPublicUser = async (id: string) => {
-  const token = await SecureStore.getItemAsync("x-token");
+  const token = await getSecureValue("x-token");
   return axios
     .get(`${apiUrl}/user/public/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -25,7 +25,7 @@ export const getPublicUser = async (id: string) => {
 };
 
 export const updateUser = async (values: any) => {
-  const token = await SecureStore.getItemAsync("x-token");
+  const token = await getSecureValue("x-token");
   return axios
     .put(`${apiUrl}/user`, values, {
       headers: { Authorization: `Bearer ${token}` },
@@ -35,7 +35,7 @@ export const updateUser = async (values: any) => {
 };
 
 export const logout = async (navigation) => {
-  SecureStore.deleteItemAsync("x-token").then(() => {
+  deleteSecureValue("x-token").then(() => {
     navigation.navigate("LoginStart");
   });
 };

@@ -1,9 +1,9 @@
-import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { apiUrl } from "./config";
+import { getSecureValue } from "./utils";
 
 export const getRounds = async () => {
-  const token = await SecureStore.getItemAsync("x-token");
+  const token = await getSecureValue("x-token");
   return axios
     .get(`${apiUrl}/round`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -13,7 +13,7 @@ export const getRounds = async () => {
 };
 
 export const getRound = async (id: string) => {
-  const token = await SecureStore.getItemAsync("x-token");
+  const token = await getSecureValue("x-token");
   return axios
     .get(`${apiUrl}/round/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -23,7 +23,7 @@ export const getRound = async (id: string) => {
 };
 
 export const deleteRound = async (id: string) => {
-  const token = await SecureStore.getItemAsync("x-token");
+  const token = await getSecureValue("x-token");
   return axios
     .delete(`${apiUrl}/round/${id}`, {
       headers: { Authorization: `Bearer ${token}` },

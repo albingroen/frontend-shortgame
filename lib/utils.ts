@@ -1,4 +1,5 @@
 import { ActionSheetIOS, Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import PhoneNumber from "awesome-phonenumber";
 
 export function classNames(...classes) {
@@ -86,3 +87,15 @@ export const SORT_VARIABLES = [
     id: "bunker",
   },
 ];
+
+export async function setSecureValue(key: string, value: string) {
+  return AsyncStorage.setItem(key, value);
+}
+
+export async function getSecureValue(key: string) {
+  return AsyncStorage.getItem(key);
+}
+
+export async function deleteSecureValue(key: string) {
+  return AsyncStorage.removeItem(key);
+}

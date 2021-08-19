@@ -1,4 +1,3 @@
-import * as SecureStore from "expo-secure-store";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Button from "../components/button";
 import Input from "../components/input";
@@ -9,6 +8,7 @@ import tailwind from "tailwind-rn";
 import { Alert, View } from "react-native";
 import { apiUrl } from "../lib/config";
 import { useQueryClient } from "react-query";
+import { getSecureValue } from "../lib/utils";
 
 interface ICreateRoundProps {
   navigation: any;
@@ -29,7 +29,7 @@ export default function CreateRoundView({ navigation }: ICreateRoundProps) {
   const onSubmit = async () => {
     setLoading(true);
 
-    const token = await SecureStore.getItemAsync("x-token");
+    const token = await getSecureValue("x-token");
 
     const values = {
       shortPuts: Number(shortPuts),

@@ -1,4 +1,3 @@
-import * as SecureStore from "expo-secure-store";
 import Button from "../components/button";
 import FadeIn from "../components/fade-in";
 import Input, { InputLabel } from "../components/input";
@@ -17,7 +16,7 @@ import {
   Switch,
 } from "react-native";
 import { apiUrl } from "../lib/config";
-import { normalizePhoneNumber } from "../lib/utils";
+import { normalizePhoneNumber, setSecureValue } from "../lib/utils";
 
 export default function LoginPhoneView({
   navigation,
@@ -41,7 +40,7 @@ export default function LoginPhoneView({
       return Alert.alert("Det mobilnummer du angav är inte giltigt");
     }
 
-    await SecureStore.setItemAsync("phoneNumber", normalizedPhoneNumber);
+    await setSecureValue("phoneNumber", normalizedPhoneNumber);
 
     axios
       .post(`${apiUrl}/auth/login`, {
@@ -73,7 +72,7 @@ export default function LoginPhoneView({
     }
   }, [initialPhoneNumber]);
 
-  const isFirstTime = !initialPhoneNumber && SecureStore;
+  const isFirstTime = !initialPhoneNumber;
 
   return (
     <KeyboardAvoidingView behavior="padding">

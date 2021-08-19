@@ -1,6 +1,6 @@
 import axios from "axios";
 import { apiUrl } from "./config";
-import * as SecureStore from "expo-secure-store";
+import { getSecureValue } from "./utils";
 
 export async function fetchImageFromUri(uri: string) {
   const response = await fetch(uri);
@@ -8,7 +8,7 @@ export async function fetchImageFromUri(uri: string) {
 }
 
 export async function uploadImage(image: any) {
-  const token = await SecureStore.getItemAsync("x-token");
+  const token = await getSecureValue("x-token");
 
   const formData = new FormData();
   formData.append("image", image);

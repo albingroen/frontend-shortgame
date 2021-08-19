@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { apiUrl } from "../lib/config";
-import * as SecureStore from "expo-secure-store";
+import { setSecureValue } from "../lib/utils";
 
 export default function LoginPhoneConfirmView({
   navigation,
@@ -32,8 +32,8 @@ export default function LoginPhoneConfirmView({
         handicap,
         code,
       })
-      .then((res) => {
-        SecureStore.setItemAsync("x-token", res.data);
+      .then(async (res) => {
+        await setSecureValue("x-token", res.data);
         navigation.navigate("Home");
         setLoading(false);
       })
